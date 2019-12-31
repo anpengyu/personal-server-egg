@@ -1,5 +1,5 @@
 {
-  "name": "person-server-egg",
+  "name": "personal-server-egg",
   "version": "1.0.0",
   "description": "个人管家后台eggjs版本",
   "private": true,

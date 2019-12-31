@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import {createConnection} from "typeorm";
+import { createConnection } from "typeorm";
 
 
 export default function (app) {
@@ -15,8 +15,8 @@ export default function (app) {
     };
     createConnection(mysql).then(() => {//connection
       console.log('连接成功');
-    // let savedPhotos = await connection.manager.find(WorkType);
-    // console.log("All photos from the db: ", savedPhotos);
-  }).catch(error => console.log(error));
+      // let savedPhotos = await connection.manager.find(WorkType);
+      // console.log("All photos from the db: ", savedPhotos);
+    }).catch(error => console.log(error));
   })
 }
