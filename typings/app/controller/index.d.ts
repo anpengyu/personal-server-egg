@@ -2,10 +2,20 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportAccount from '../../../app/controller/account';
+import ExportAccountBook from '../../../app/controller/accountBook';
+import ExportCard from '../../../app/controller/card';
 import ExportHome from '../../../app/controller/home';
+import ExportProject from '../../../app/controller/project';
+import ExportWork from '../../../app/controller/work';
 
 declare module 'egg' {
   interface IController {
+    account: ExportAccount;
+    accountBook: ExportAccountBook;
+    card: ExportCard;
     home: ExportHome;
+    project: ExportProject;
+    work: ExportWork;
   }
 }

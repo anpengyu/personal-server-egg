@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 
-
 export default function (app) {
 
   app.beforeStart(async () => {
