@@ -7,7 +7,7 @@
     "typescript": true,
     "declarations": true
   },
-  "scripts": {  
+  "scripts": {
     "start": "egg-scripts start --env=prod --title=egg-server-person-server-egg",
     "stop": "egg-scripts stop --title=egg-server-person-server-egg",
     "dev": "egg-bin dev",

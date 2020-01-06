@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column,BaseEntity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('accountbooktype')
-export class AccountBookType {
+export default class AccountBookType extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
     @Column({name:'level_one'})

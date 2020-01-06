@@ -1,6 +1,6 @@
 import BaseService from '../core/BaseService';
 import { getRepository } from 'typeorm';
-import { Project } from '../model/Project';
+import Project from '../model/Project';
 
 /**
  * work Service

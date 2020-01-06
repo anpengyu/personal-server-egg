@@ -1,8 +1,8 @@
 import BaseService from '../core/BaseService';
 import { getRepository } from 'typeorm';
-import { Account } from '../model/Account';
-import { AccountTitle } from '../model/AccountTitle';
-import { AccountType } from '../model/AccountType';
+import Account from '../model/Account';
+import AccountTitle from '../model/AccountTitle';
+import AccountType from '../model/AccountType';
 
 
 /**
