@@ -4,6 +4,7 @@ export default class ProjectController extends BaseController {
 
      public async loadProject() {
         const { ctx } = this;
-        ctx.body = await ctx.service.project.loadProject();
+        let data = await ctx.service.project.loadProject();
+        this.success({data})
     }
 }

@@ -7,14 +7,14 @@ import { Service } from 'egg';
 export default class BaseService extends Service {
     paramsData: any = {};
     params: any = '';
-    constructor(params: any) {
-        super(params);
+    offset: number = 0;
+    limit: number = 10;
+    constructor(request: any) {
+        super(request);
         const { ctx } = this;
         this.params = ctx.query;
-        // this.paramsData = {
-        //     skip: !_.isEmpty(this.params.pageNum) ? (this.params.pageNum * this.params.pageSize) : 0, 
-        //     take: !_.isEmpty(this.params.pageSize) ? this.params.pageSize : 5,
-        // };
+        this.offset = ((Number(this.params.pageNum) - 1) * Number(this.params.pageSize)) || 0;
+        this.limit = Number(this.params.pageSize) || 10;
     }
 
 }

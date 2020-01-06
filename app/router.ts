@@ -6,10 +6,10 @@ export default (app: Application) => {
 
   router.get('/', controller.home.index);
   // 获取项目类型列表
-  router.get('/loadWorkTypes', work.loadWorkType);
-  router.get('/loadWorkNames', work.loadWorkNames);
-  router.get('/loadWorks', work.loadWorks);
-  router.get('/loadProject', project.loadProject);
+  router.get('/work/loadWorkTypes', work.loadWorkType);
+  router.get('/work/loadWorkNames', work.loadWorkNames);
+  router.get('/work/loadWorks', work.loadWorks);
+  router.get('/project/loadProject', project.loadProject);
   router.get('/loadAccount', account.loadAccount);
   router.get('/loadAccountTitle', account.loadAccountTitle);
   router.get('/loadAccountType', account.loadAccountType);
