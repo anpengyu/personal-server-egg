@@ -12,18 +12,16 @@ export default class Work  extends BaseEntity {
     content: string;
     @Column()
     time: string;
-    @Column()
+    @Column({default:'0'})
     flag: string;
-    @Column({name:'type_id'})
+    @Column({name:'type_id',default:''})
     typeId: string;
-    @Column()
+    @Column({default:''})
     butt_joint: string;
-    @Column({name:'test_date'})
-    developmentDate: string;
-    @Column({name:'test_date'})
+    @Column({name:'test_date',default:''})
     testDate: string;
-    @Column({name:'online_date'})
+    @Column({name:'online_date',default:''})
     onlineDate: string;
-    @Column()
+    @Column({default:''})
     icon: string;
 }
