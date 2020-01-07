@@ -4,13 +4,15 @@ export default class HomeController extends BaseController {
     //获取项目类型
     public async loadWorkType() {
         const { ctx } = this;
-        ctx.body = await ctx.service.work.loadWorkType();
+        let data = await ctx.service.work.loadWorkType();
+        this.success({data})
     }
 
     //根据项目类型id获取项目名称
     public async loadWorkNames() {
         const { ctx } = this;
-        ctx.body = await ctx.service.work.loadWorkName(this.params.id);
+        let data = await ctx.service.work.loadWorkName(this.params.id);
+        this.success({data});
     }
 
      public async loadWorks() {
