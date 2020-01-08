@@ -11,13 +11,14 @@ export default class BaseController extends Controller {
     }
 
     success(success: Response.Success) {
-        const { data, state } = success;
+        const { data, state,pagination } = success;
         const { ctx } = this;
         ctx.body = {
             code: 0,
             msg: 'OK',
             result: {
                 data: data || undefined,
+                pagination:pagination||undefined
             }
         }
         ctx.status = state || 200;

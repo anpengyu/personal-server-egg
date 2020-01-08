@@ -1,8 +1,8 @@
 import BaseService from '../core/BaseService';
 import { getRepository } from 'typeorm';
-import  WorkType  from '../model/WorkType';
-import  WorkName from '../model/WorkName';
-import  Work  from '../model/Work';
+import WorkType from '../model/WorkType';
+import WorkName from '../model/WorkName';
+import Work from '../model/Work';
 let _ = require('lodash');
 
 /**
@@ -39,15 +39,15 @@ export default class WorkService extends BaseService {
     public async addWorks(params: any) {
         const workRepository = getRepository(Work);
         let data = {
-            time:params.time,
-            type:params.workType,
-            name:params.workName,
-            butt_joint:params.developer,
-            content:params.des,
+            time: params.time,
+            type: params.workType,
+            name: params.workName,
+            butt_joint: params.developer,
+            content: params.des,
         }
-        console.log('params',params)
-        let response =  await workRepository.save(data);
-    
+        console.log('params', params)
+        let response = await workRepository.save(data);
+
         return response;
     }
 
