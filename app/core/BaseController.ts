@@ -6,19 +6,18 @@ export default class BaseController extends Controller {
     constructor(params) {
         super(params);
         const { ctx } = this;
-        console.log('constructor',params)
         this.params = ctx.query;
     }
 
     success(success: Response.Success) {
-        const { data, state,pagination } = success;
+        const { data, state, pagination } = success;
         const { ctx } = this;
         ctx.body = {
             code: 0,
             msg: 'OK',
             result: {
                 data: data || undefined,
-                pagination:pagination||undefined
+                pagination: pagination || undefined
             }
         }
         ctx.status = state || 200;

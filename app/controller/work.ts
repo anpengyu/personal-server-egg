@@ -21,7 +21,7 @@ export default class HomeController extends BaseController {
             { type: this.params.type },
             { flag: this.params.flag }
         ]
-        let data = await ctx.service.work.loadWorks(this.params);
+        let data = await ctx.service.work.loadWorks(params);
         let pagination = await ctx.service.work.loadPagination(params);
         this.success({ data, pagination })
     }

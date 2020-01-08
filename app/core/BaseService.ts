@@ -26,14 +26,16 @@ export default class BaseService extends Service {
         } else {
             sql = `select count(1) as count from work where`;
             params.map((item: any) => {
-                for (let i in item) {
-                    if (!_.isEmpty(item[i])) {
-                        sql += ` ${i} = '${item[i]}' and`;
-                    }
+                let key = Object.keys(item)[0];
+                if (!_.isEmpty(item[key])) {
+                    sql += ` ${key} = '${item[key]}' and`;
                 }
             })
             if (sql.slice(sql.length - 3, sql.length) == 'and') {
                 sql = sql.slice(0, sql.length - 3);
+            }
+            if (sql.slice(sql.length - 5, sql.length) == 'where') {
+                sql = sql.slice(0, sql.length - 5);
             }
         }
         const totalCountSql = await getConnection().query(sql);

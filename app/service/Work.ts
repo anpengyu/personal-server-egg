@@ -24,15 +24,21 @@ export default class WorkService extends BaseService {
 
     public async loadWorks(params: any) {
         const workRepository: any = getRepository(Work);
-        let type = params.type;
-        let flag = params.flag;
         let workBuilder = await workRepository.createQueryBuilder("work");
-        if (!_.isEmpty(type)) {
-            workBuilder = workBuilder.where('type=:type', { type })
-        }
-        if (!_.isEmpty(flag)) {
-            workBuilder = workBuilder.andWhere('flag=:flag', { flag })
-        }
+        params.map((item: any) => {
+            let key = Object.keys(item)[0];
+            let value = item[key];
+            let isHasWhere = false;
+            if (!_.isEmpty(value)) {
+                if (!isHasWhere) {
+                    isHasWhere = true;
+                    workBuilder = workBuilder.where(`${key}=:value`, { value });
+                } else {
+                    workBuilder = workBuilder.andWhere(`${key}=:value`, { value });
+                }
+            }
+        })
+
         return workBuilder.offset(this.offset).limit(this.limit).getMany();
     }
 
