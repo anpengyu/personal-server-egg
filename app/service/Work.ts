@@ -1,5 +1,5 @@
 import BaseService from '../core/BaseService';
-import { getRepository } from 'typeorm';
+import { getRepository, getConnection } from 'typeorm';
 import WorkType from '../model/WorkType';
 import WorkName from '../model/WorkName';
 import Work from '../model/Work';
@@ -14,6 +14,13 @@ export default class WorkService extends BaseService {
         const workTypeRepository = getRepository(WorkType);
         let workTypeModel = await workTypeRepository.find()
         return workTypeModel;
+    }
+
+    public async loadCountForFlag() {
+        let sql = 'select flag,count(*) as count from work group by flag order by flag';
+        const waitDevelopSql = await getConnection().query(sql);
+        console.log('waitDevelopSql',waitDevelopSql[1]);
+        return waitDevelopSql;
     }
 
     public async loadWorkName(id: string) {
@@ -58,7 +65,7 @@ export default class WorkService extends BaseService {
             let workTypeId = '';
             if (params.addNewType == 'true') {
                 workTypeId = String(addNewTypeResponse.id);
-            }else{
+            } else {
                 workTypeId = params.workTypeId
             }
             let nameData = {

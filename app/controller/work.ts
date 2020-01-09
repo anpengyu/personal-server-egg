@@ -4,7 +4,13 @@ export default class HomeController extends BaseController {
     //获取项目类型
     public async loadWorkType() {
         const { ctx } = this;
-        let data = await ctx.service.work.loadWorkType();
+      
+        let typeData = await ctx.service.work.loadWorkType();
+        let count = await ctx.service.work.loadCountForFlag();
+        let data = {
+            typeData,
+            count
+        };
         this.success({ data })
     }
 
