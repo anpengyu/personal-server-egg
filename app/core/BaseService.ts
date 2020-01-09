@@ -14,7 +14,7 @@ export default class BaseService extends Service {
         super(request);
         const { ctx } = this;
         this.params = ctx.query;
-        this.offset = ((Number(this.params.pageNum) - 1) * Number(this.params.pageSize)) || 0;
+        this.offset = _.isEmpty(this.params.pageNum) ? 0 : ((Number(this.params.pageNum) - 1) * (Number(this.params.pageSize)||10))
         this.limit = Number(this.params.pageSize) || 10;
     }
 
@@ -42,8 +42,8 @@ export default class BaseService extends Service {
         const pageSize = this.params.pageSize || 10;
         const totalCount = totalCountSql[0].count;
         const pagination = {
-            page: this.params.pageNum,
-            perPage: this.params.pageSize,
+            page: this.params.pageNum || 1,
+            perPage: pageSize,
             totalCount,
             totalPage: Math.floor((totalCount - 1) / pageSize) + 1,
         };
