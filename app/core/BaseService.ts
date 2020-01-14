@@ -1,5 +1,5 @@
 import { Service } from 'egg';
-import { getConnection } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 let _ = require('lodash');
 
 /**
@@ -14,11 +14,11 @@ export default class BaseService extends Service {
         super(request);
         const { ctx } = this;
         this.params = ctx.query;
-        this.offset = _.isEmpty(this.params.pageNum) ? 0 : ((Number(this.params.pageNum) - 1) * (Number(this.params.pageSize)||10))
+        this.offset = _.isEmpty(this.params.pageNum) ? 0 : ((Number(this.params.pageNum) - 1) * (Number(this.params.pageSize) || 10))
         this.limit = Number(this.params.pageSize) || 10;
     }
 
-    //分页
+    //获取分页每页条数、页数、总条数
     public async loadPagination(params: any) {
         let sql = '';
         if (_.isEmpty(params)) {
@@ -50,4 +50,28 @@ export default class BaseService extends Service {
         return pagination;
     }
 
+    /**
+     * 拼接查询参数
+     * @param params 参数
+     * @param name 表
+     */
+    public queryBuilder(params: any, name: any) {
+        const workRepository: any = getRepository(name);
+        let workBuilder = workRepository.createQueryBuilder(`${name}`);
+        params.map((item: any) => {
+            let key = Object.keys(item)[0];
+            let value = item[key];
+            let isHasWhere = false;
+            if (!_.isEmpty(value)) {
+                if (!isHasWhere) {
+                    isHasWhere = true;
+                    workBuilder = workBuilder.where(`${key}=:value`, { value });
+                } else {
+                    workBuilder = workBuilder.andWhere(`${key}=:value`, { value });
+                }
+            }
+
+        })
+        return workBuilder;
+    }
 }

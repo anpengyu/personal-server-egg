@@ -3,7 +3,7 @@ import { getRepository, getConnection } from 'typeorm';
 import WorkType from '../model/WorkType';
 import WorkName from '../model/WorkName';
 import Work from '../model/Work';
-let _ = require('lodash');
+// let _ = require('lodash');
 
 /**
  * work Service
@@ -19,7 +19,6 @@ export default class WorkService extends BaseService {
     public async loadCountForFlag() {
         let sql = 'select flag,count(*) as count from work group by flag order by flag';
         const waitDevelopSql = await getConnection().query(sql);
-        console.log('waitDevelopSql',waitDevelopSql[1]);
         return waitDevelopSql;
     }
 
@@ -30,22 +29,17 @@ export default class WorkService extends BaseService {
     }
 
     public async loadWorks(params: any) {
-        const workRepository: any = getRepository(Work);
-        let workBuilder = await workRepository.createQueryBuilder("work");
-        params.map((item: any) => {
-            let key = Object.keys(item)[0];
-            let value = item[key];
-            let isHasWhere = false;
-            if (!_.isEmpty(value)) {
-                if (!isHasWhere) {
-                    isHasWhere = true;
-                    workBuilder = workBuilder.where(`${key}=:value`, { value });
-                } else {
-                    workBuilder = workBuilder.andWhere(`${key}=:value`, { value });
-                }
-            }
-        })
+        let workBuilder = this.queryBuilder(params, Work);
         return workBuilder.offset(this.offset).limit(this.limit).orderBy('id', 'DESC').getMany();
+    }
+
+    // 删除一条工作记录
+    public async delWork(id: string) {
+        console.log('id:',id);
+        const workNameRepository = getRepository(Work);
+        let workToRemove: any = await workNameRepository.findOne(id);
+        const removeResponse = await workNameRepository.remove(workToRemove);
+        return removeResponse;
     }
 
     public async addWorks(params: any) {

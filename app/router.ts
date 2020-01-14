@@ -10,7 +10,7 @@ export default (app: Application) => {
   router.get('/work/loadWorkNames', work.loadWorkNames);
   router.get('/work/loadWorks', work.loadWorks);
   router.post('/work/addWork',work.addWorks);
-
+  router.post('/work/delWork',work.deleteWork);
   router.get('/project/loadProject', project.loadProject);
 
   router.get('/loadAccount', account.loadAccount);

@@ -37,4 +37,12 @@ export default class HomeController extends BaseController {
         let data = await ctx.service.work.addWorks(this.params);
         this.success({ data })
     }
+
+    public async deleteWork() {
+        const { ctx } = this;
+        let data = await ctx.service.work.delWork(this.params.id);
+        if(data){
+            this.success({ data })
+        }
+    }
 }
