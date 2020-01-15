@@ -82,14 +82,32 @@ export default class WorkService extends BaseService {
         let response = '';
         if (!_.isEmpty(params.id)) {
             let workToUpdate: any = await workRepository.findOne(params.id);
-            workToUpdate.time = params.time;
-            workToUpdate.type = params.workType;
-            workToUpdate.typeId = params.typeId;
-            workToUpdate.name = params.workName;
-            workToUpdate.butt_joint = params.developer;
-            workToUpdate.content = params.des;
-            workToUpdate.flag = '1';
-            console.log('data', data);
+            if (!_.isEmpty(params.workName)) {
+                workToUpdate.time = params.time;
+                workToUpdate.type = params.workType;
+                workToUpdate.typeId = params.typeId;
+                workToUpdate.name = params.workName;
+                workToUpdate.butt_joint = params.developer;
+                workToUpdate.content = params.des;
+                // workToUpdate.flag = params.flag;
+                console.log('data', data);
+            } else {
+                workToUpdate.flag = params.flag;
+                if (!_.isEmpty(params.time)) {
+                    switch (params.flag) {
+                        case '2':
+                            workToUpdate.developmentDate = params.time;
+                            break;
+                        case '3':
+                            workToUpdate.testDate = params.time;
+                            break;
+                        case '4':
+                            workToUpdate.onlineDate = params.time;
+                            break;
+                    }
+                }
+            }
+            console.log('workToUpdate',workToUpdate);
             response = await workRepository.save(workToUpdate);
         } else {
             response = await workRepository.save(data);

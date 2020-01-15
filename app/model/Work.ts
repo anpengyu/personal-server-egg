@@ -22,6 +22,8 @@ export default class Work  extends BaseEntity {
     testDate: string;
     @Column({name:'online_date',default:''})
     onlineDate: string;
+    @Column({name:'development_date',default:''})
+    developmentDate: string;
     @Column({default:''})
     icon: string;
 }
