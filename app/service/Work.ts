@@ -3,7 +3,7 @@ import { getRepository, getConnection } from 'typeorm';
 import WorkType from '../model/WorkType';
 import WorkName from '../model/WorkName';
 import Work from '../model/Work';
-// let _ = require('lodash');
+let _ = require('lodash');
 
 /**
  * work Service
@@ -35,7 +35,7 @@ export default class WorkService extends BaseService {
 
     // 删除一条工作记录
     public async delWork(id: string) {
-        console.log('id:',id);
+        console.log('id:', id);
         const workNameRepository = getRepository(Work);
         let workToRemove: any = await workNameRepository.findOne(id);
         const removeResponse = await workNameRepository.remove(workToRemove);
@@ -64,19 +64,37 @@ export default class WorkService extends BaseService {
             }
             let nameData = {
                 title: params.workName,
-                workTypeId
+                workTypeId,
             }
             let addNewNameResponse = await workNameRepository.save(nameData);
             console.log('addNewNameResponse', addNewNameResponse);
         }
-        let data = {
+        let data: any = {
             time: params.time,
             type: params.workType,
+            typeId: params.typeId,
             name: params.workName,
             butt_joint: params.developer,
             content: params.des,
+            flag: '1',
+            icon: 'https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png'
         }
-        let response = await workRepository.save(data);
+        let response = '';
+        if (!_.isEmpty(params.id)) {
+            let workToUpdate: any = await workRepository.findOne(params.id);
+            workToUpdate.time = params.time;
+            workToUpdate.type = params.workType;
+            workToUpdate.typeId = params.typeId;
+            workToUpdate.name = params.workName;
+            workToUpdate.butt_joint = params.developer;
+            workToUpdate.content = params.des;
+            workToUpdate.flag = '1';
+            console.log('data', data);
+            response = await workRepository.save(workToUpdate);
+        } else {
+            response = await workRepository.save(data);
+        }
+
         return response;
     }
 
