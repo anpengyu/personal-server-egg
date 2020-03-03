@@ -7,6 +7,7 @@ import ExportAccountBook from '../../../app/controller/accountBook';
 import ExportCard from '../../../app/controller/card';
 import ExportHome from '../../../app/controller/home';
 import ExportProject from '../../../app/controller/project';
+import ExportUser from '../../../app/controller/user';
 import ExportWork from '../../../app/controller/work';
 
 declare module 'egg' {
@@ -16,6 +17,7 @@ declare module 'egg' {
     card: ExportCard;
     home: ExportHome;
     project: ExportProject;
+    user: ExportUser;
     work: ExportWork;
   }
 }

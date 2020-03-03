@@ -2,7 +2,7 @@ import { Application } from 'egg';
 
 export default (app: Application) => {
   const { controller, router } = app;
-  const { work,project,account,card,accountBook } = controller;
+  const { work,project,account,card,accountBook,user } = controller;
 
   router.get('/', controller.home.index);
   // 获取项目类型列表
@@ -22,4 +22,9 @@ export default (app: Application) => {
   router.get('/loadAccountBook', accountBook.loadAccountBook);
   router.get('/loadAccountBookType', accountBook.loadAccountBookType);
   router.get('/loadAccountBookTypeDetail', accountBook.loadAccountBookTypeDetail);
+
+  router.post('/user/register',user.register);
+  router.get('/user/login',user.login);
+  router.get('/user/logout',user.logout);
+  router.get('/user/findPsw',user.findPsw);
 };

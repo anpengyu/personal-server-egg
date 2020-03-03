@@ -7,6 +7,11 @@ export default class BaseController extends Controller {
         super(params);
         const { ctx } = this;
         this.params = ctx.query;
+        if(ctx.request.method=='GET'){
+            this.params = ctx.query;
+        }else{
+            this.params = ctx.request.body
+        }
     }
 
     success(success: Response.Success) {

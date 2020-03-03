@@ -25,6 +25,8 @@
     "egg": "^2.6.1",
     "egg-mysql": "^3.0.0",
     "egg-scripts": "^2.6.0",
+    "egg-validate": "^2.0.2",
+    "loadsh": "0.0.4",
     "lodash": "^4.17.15",
     "mysql": "^2.17.1",
     "reflect-metadata": "^0.1.13",

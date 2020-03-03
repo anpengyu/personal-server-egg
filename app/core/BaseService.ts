@@ -13,7 +13,11 @@ export default class BaseService extends Service {
     constructor(request: any) {
         super(request);
         const { ctx } = this;
-        this.params = ctx.query;
+        if(ctx.request.method=='GET'){
+            this.params = ctx.query;
+        }else{
+            this.params = ctx.request.body
+        }
         this.offset = _.isEmpty(this.params.pageNum) ? 0 : ((Number(this.params.pageNum) - 1) * (Number(this.params.pageSize) || 10))
         this.limit = Number(this.params.pageSize) || 10;
     }
