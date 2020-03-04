@@ -2,10 +2,14 @@ import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 
 export default (appInfo: EggAppInfo) => {
   const config = {} as PowerPartial<EggAppConfig>;
-
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + '_1577775677616_1422';
+  config.keys = appInfo.name + '202003031516_900321';
+
+  config.jwt = {
+    enable: true,
+    // ignore: [ '/api/v1/test/', '/public/' ], // 哪些请求不需要认证
+  }
   //关闭csrf
   config.security = {
     csrf: {

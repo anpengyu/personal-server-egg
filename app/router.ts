@@ -1,4 +1,5 @@
 import { Application } from 'egg';
+import authentication from './middleware/authentication';
 
 export default (app: Application) => {
   const { controller, router } = app;
@@ -17,14 +18,14 @@ export default (app: Application) => {
   router.get('/loadAccountTitle', account.loadAccountTitle);
   router.get('/loadAccountType', account.loadAccountType);
 
-  router.get('/loadCard', card.loadCard);
+  router.get('/loadCard',authentication(), card.loadCard);
 
   router.get('/loadAccountBook', accountBook.loadAccountBook);
   router.get('/loadAccountBookType', accountBook.loadAccountBookType);
   router.get('/loadAccountBookTypeDetail', accountBook.loadAccountBookTypeDetail);
 
   router.post('/user/register',user.register);
-  router.get('/user/login',user.login);
+  router.post('/user/login',user.login);
   router.get('/user/logout',user.logout);
   router.get('/user/findPsw',user.findPsw);
 };

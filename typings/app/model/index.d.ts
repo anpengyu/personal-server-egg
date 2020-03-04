@@ -10,6 +10,7 @@ import ExportAccountTitle from '../../../app/model/AccountTitle';
 import ExportAccountType from '../../../app/model/AccountType';
 import ExportCard from '../../../app/model/Card';
 import ExportProject from '../../../app/model/Project';
+import ExportUser from '../../../app/model/User';
 import ExportWork from '../../../app/model/Work';
 import ExportWorkName from '../../../app/model/WorkName';
 import ExportWorkType from '../../../app/model/WorkType';
@@ -24,6 +25,7 @@ declare module 'egg' {
     AccountType: ReturnType<typeof ExportAccountType>;
     Card: ReturnType<typeof ExportCard>;
     Project: ReturnType<typeof ExportProject>;
+    User: ReturnType<typeof ExportUser>;
     Work: ReturnType<typeof ExportWork>;
     WorkName: ReturnType<typeof ExportWorkName>;
     WorkType: ReturnType<typeof ExportWorkType>;

@@ -8,7 +8,7 @@ export default class UserController extends BaseController {
         const { password, repassword } = this.params;
         try {
             ctx.validate({
-                userName: { type: constants.VALIDATE_PHONE, },
+                username: { type: constants.VALIDATE_USERNAME, },
                 password: { type: constants.VALIDATE_PASSWORD },
                 repassword: { type: constants.VALIDATE_RE_PASSWORD }
             });
@@ -19,15 +19,31 @@ export default class UserController extends BaseController {
             this.failure({ state: 422, msg: err.errors[0].message });
             return;
         }
-        let data = await this.ctx.service.user.register();
-        this.success({ data })
-
-
+        let data = await this.ctx.service.user.register(this.params);
+        if (_.isEmpty(data)) {
+            this.success({ data: '注册成功~' })
+        } else {
+            this.failure({ state: 423, msg: '用户已存在~' })
+        }
     }
 
     public async login() {
-
-        this.success({ data: "login ok" })
+        const { ctx } = this;
+        try {
+            ctx.validate({
+                username: { type: constants.VALIDATE_USERNAME, },
+                password: { type: constants.VALIDATE_PASSWORD }
+            });
+        } catch (err) {
+            this.failure({ state: 422, msg: err.errors[0].message });
+            return;
+        }
+        let data: any = await this.ctx.service.user.login(this.params);
+        if (data.state != 0) {
+            this.failure({ state: data.state, msg: data.msg })
+        } else {
+            this.success({ data: data })
+        }
     }
 
     public async logout() {
