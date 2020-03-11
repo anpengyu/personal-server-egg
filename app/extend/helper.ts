@@ -1,83 +1,103 @@
 import { Context } from 'egg';
 const errorCode = {
-    100: 'continue',
-    101: 'switching protocols',
-    102: 'processing',
-    200: 'ok',
-    201: 'created',
-    202: 'accepted',
-    203: 'non-authoritative information',
-    204: 'no content',
-    205: 'reset content',
-    206: 'partial content',
-    207: 'multi-status',
-    300: 'multiple choices',
-    301: 'moved permanently',
-    302: 'moved temporarily',
-    303: 'see other',
-    304: 'not modified',
-    305: 'use proxy',
-    307: 'temporary redirect',
-    400: 'bad request',
-    401: 'unauthorized',
-    402: 'payment required',
-    403: 'forbidden',
-    404: 'not found1111111111',
-    405: 'method not allowed',
-    406: 'not acceptable',
-    407: 'proxy authentication required',
-    408: 'request time-out',
-    409: 'conflict',
-    410: 'gone',
-    411: 'length required',
-    412: 'precondition failed',
-    413: 'request entity too large',
-    414: 'request-uri too large',
-    415: 'unsupported media type',
-    416: 'requested range not satisfiable',
-    417: 'expectation failed',
-    418: 'i\'m a teapot',
-    422: 'unprocessable entity',
-    423: 'locked',
-    424: 'failed dependency',
-    425: 'unordered collection',
-    426: 'upgrade required',
-    428: 'precondition required',
-    429: 'too many requests',
-    431: 'request header fields too large',
-    500: 'internal server error',
-    501: 'not implemented',
-    502: 'bad gateway',
-    503: 'service unavailable',
-    504: 'gateway time-out',
-    505: 'http version not supported',
-    506: 'variant also negotiates',
-    507: 'insufficient storage',
-    509: 'bandwidth limit exceeded',
-    510: 'not extended',
-    511: 'network authentication required',
-  };
+  100: 'continue',
+  101: 'switching protocols',
+  102: 'processing',
+  200: 'ok',
+  201: 'created',
+  202: 'accepted',
+  203: 'non-authoritative information',
+  204: 'no content',
+  205: 'reset content',
+  206: 'partial content',
+  207: 'multi-status',
+  300: 'multiple choices',
+  301: 'moved permanently',
+  302: 'moved temporarily',
+  303: 'see other',
+  304: 'not modified',
+  305: 'use proxy',
+  307: 'temporary redirect',
+  400: 'bad request',
+  401: 'unauthorized',
+  402: 'payment required',
+  403: 'forbidden',
+  404: 'not found',
+  405: 'method not allowed',
+  406: 'not acceptable',
+  407: 'proxy authentication required',
+  408: 'request time-out',
+  409: 'conflict',
+  410: 'gone',
+  411: 'length required',
+  412: 'precondition failed',
+  413: 'request entity too large',
+  414: 'request-uri too large',
+  415: 'unsupported media type',
+  416: 'requested range not satisfiable',
+  417: 'expectation failed',
+  418: 'i\'m a teapot',
+  422: 'unprocessable entity',
+  423: 'locked',
+  424: 'failed dependency',
+  425: 'unordered collection',
+  426: 'upgrade required',
+  428: 'precondition required',
+  429: 'too many requests',
+  431: 'request header fields too large',
+  500: 'internal server error',
+  501: 'not implemented',
+  502: 'bad gateway',
+  503: 'service unavailable',
+  504: 'gateway time-out',
+  505: 'http version not supported',
+  506: 'variant also negotiates',
+  507: 'insufficient storage',
+  509: 'bandwidth limit exceeded',
+  510: 'not extended',
+  511: 'network authentication required',
+};
 // 错误helper
 const errorHelper = (code: number, msg?: string) => {
-    return {
-      code,
-      msg: msg || errorCode[code],
-      result: {},
-    };
+  return {
+    code,
+    msg: msg || errorCode[code],
+    result: {},
   };
+};
 
 // 没有登陆
 const notLogin = (ctx: Context) => {
-    // if (ctx.acceptJSON) {
-      ctx.body = errorHelper(401);
-      ctx.status = 401;
-    // } else {
-    //   ctx.redirect('/user/login');
-    // }
-    return false;
-  
-  };
+  // if (ctx.acceptJSON) {
+  ctx.body = errorHelper(401);
+  ctx.status = 401;
+  // } else {
+  //   ctx.redirect('/user/login');
+  // }
+  return false;
 
-  export default {
-    notLogin
-  }
+};
+
+const tokenExpired=(ctx:Context)=>{
+  ctx.body = errorHelper(401,'token过期，请重新登陆');
+  ctx.status = 401;
+  return false;
+}
+
+const currentDate = () => {
+  var now = new Date();
+  var year = now.getFullYear(); //得到年份
+  var month = now.getMonth();//得到月份
+  var date = now.getDate();//得到日期
+  // var day = now.getDay();//得到周几
+  var hour = now.getHours();//得到小时
+  var minu = now.getMinutes();//得到分钟
+  var sec = now.getSeconds();//得到秒
+  // var MS = now.getMilliseconds();//获取毫秒
+  return year + '-' + month + '-' + date + '-' + hour + '-' + minu + '-' + sec;
+}
+export default {
+  notLogin,
+  currentDate,
+  tokenExpired
+}

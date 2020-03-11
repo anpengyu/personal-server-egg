@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 import Account from '../model/Account';
 import AccountTitle from '../model/AccountTitle';
 import AccountType from '../model/AccountType';
-
+import ImportantDays from '../model/ImportantDays';
 
 /**
  * work Service
@@ -12,6 +12,12 @@ export default class AccountService extends BaseService {
 
     public async loadAccount() {
         const accountRepository = getRepository(Account);
+        let AccountModel = await accountRepository.find()
+        return AccountModel;
+    }
+
+    public async dd() {
+        const accountRepository = getRepository(ImportantDays);
         let AccountModel = await accountRepository.find()
         return AccountModel;
     }

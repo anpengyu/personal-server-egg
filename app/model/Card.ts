@@ -1,7 +1,8 @@
-import { Entity, Column, BaseEntity,PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('card_list')
-export default class Card extends BaseEntity{
+export default class Card extends BaseEntity {
+
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
@@ -9,7 +10,7 @@ export default class Card extends BaseEntity{
     @Column()
     name: string;
     @Column()
-    money    : string;
+    money: string;
     @Column()
     address: string;
     @Column()
@@ -20,4 +21,13 @@ export default class Card extends BaseEntity{
     type_name: string;
     @Column()
     time: string;
+    @Column()
+    userid: number;
+
+    fullName():number {
+        const{type,name} = this;
+        console.log('type',type)
+        console.log('name',name)
+        return Number(type)+Number(name)
+    }
 }

@@ -24,24 +24,31 @@ export default (appInfo: EggAppInfo) => {
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
   };
-  const mysql = {
+  // const mysql = {
+  //   client: {
+  //       type: "mysql",
+  //       host: "121.36.9.185",
+  //       port: 10086,
+  //       user: "root",
+  //       username: "root",
+  //       password: "anpengyu1",
+  //       database: "tally",
+  //     },
+  //   app: true,
+  //   agent: false,
+  // };
+  // const modelEntities = '/app/model/*.ts';
+  config.redis = {
     client: {
-        type: "mysql",
-        host: "121.36.9.185",
-        port: 10086,
-        user: "root",
-        username: "root",
-        password: "anpengyu1",
-        database: "tally",
-      },
-    app: true,
-    agent: false,
-  };
-  const modelEntities = '/app/model/*.ts';
-
+      port: 6379,          // Redis port
+      host: '127.0.0.1',   // Redis host
+      password: 'anpengyu',
+      db: 0,
+    },
+  }
   return {
-    mysql,
-    modelEntities,
+    // mysql,
+    // modelEntities,
     ...config,
     ...bizConfig,
   };

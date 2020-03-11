@@ -8,6 +8,11 @@ export default class AccountController extends BaseController {
         ctx.body = await ctx.service.account.loadAccount();
     }
 
+    public async dd() {
+        const { ctx } = this;
+        ctx.body = await ctx.service.account.dd();
+    }
+
     public async loadAccountTitle() {
         const { ctx } = this;
         if(_.isEmpty(this.params.parentId)){

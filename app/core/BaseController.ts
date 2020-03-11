@@ -3,15 +3,28 @@ import { Response } from './Type';
 
 export default class BaseController extends Controller {
     params: any = '';
+    userId: any = 0;
+    token: string = '';
     constructor(params) {
         super(params);
         const { ctx } = this;
         this.params = ctx.query;
-        if(ctx.request.method=='GET'){
+        if (ctx.request.method == 'GET') {
             this.params = ctx.query;
-        }else{
+        } else {
             this.params = ctx.request.body
         }
+        this.token = ctx.request.header.authorization;
+        // this.loadUserId(token);
+        // let s='';
+        // app.redis.get(token).then((v)=>{
+        //     console.log('app.redis.get(token)', v)
+        //     // s = v
+        // });
+    }
+
+    loadUserId = async (token) => {
+        this.userId = await this.app.redis.get(token)
     }
 
     success(success: Response.Success) {

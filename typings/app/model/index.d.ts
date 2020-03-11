@@ -1,4 +1,4 @@
-// This file is created by egg-ts-helper@1.25.6
+// This file is created by egg-ts-helper@1.25.7
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
@@ -9,6 +9,7 @@ import ExportAccountBookTypeDetail from '../../../app/model/AccountBookTypeDetai
 import ExportAccountTitle from '../../../app/model/AccountTitle';
 import ExportAccountType from '../../../app/model/AccountType';
 import ExportCard from '../../../app/model/Card';
+import ExportImportantDays from '../../../app/model/ImportantDays';
 import ExportProject from '../../../app/model/Project';
 import ExportUser from '../../../app/model/User';
 import ExportWork from '../../../app/model/Work';
@@ -24,6 +25,7 @@ declare module 'egg' {
     AccountTitle: ReturnType<typeof ExportAccountTitle>;
     AccountType: ReturnType<typeof ExportAccountType>;
     Card: ReturnType<typeof ExportCard>;
+    ImportantDays: ReturnType<typeof ExportImportantDays>;
     Project: ReturnType<typeof ExportProject>;
     User: ReturnType<typeof ExportUser>;
     Work: ReturnType<typeof ExportWork>;

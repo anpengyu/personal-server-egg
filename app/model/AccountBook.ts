@@ -1,4 +1,4 @@
-import { Entity, Column,BaseEntity, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('accountbook')
 export default class AccountBook extends BaseEntity {
@@ -12,10 +12,10 @@ export default class AccountBook extends BaseEntity {
     address: string;
     @Column()
     classify: string;
-    @Column({name:'source_type'})
+    @Column({ name: 'source_type' })
     sourceType: string;
     @Column()
-    money    : string;
+    money: string;
     @Column()
     time: string;
     @Column()
@@ -26,8 +26,10 @@ export default class AccountBook extends BaseEntity {
     directions: string;
     @Column()
     monthWeek: string;
-    @Column({name:'type_id'})
+    @Column({ name: 'type_id' })
     typeId: string;
     @Column()
     type: string;
+    @Column()
+    userid: number;
 }
