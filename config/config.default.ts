@@ -24,6 +24,22 @@ export default (appInfo: EggAppInfo) => {
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
   };
+
+  let errorCode = {
+    1062:'唯一值重复'
+  }
+  config.onerror = {
+    all(err, ctx) {
+      console.log('框架错误拦截', err);
+        ctx.status = 400;
+        ctx.body = JSON.stringify({
+          code:400,
+          data: null,
+          message:  errorCode[err.errno],
+          success: false
+        });
+    }
+  }
   // const mysql = {
   //   client: {
   //       type: "mysql",

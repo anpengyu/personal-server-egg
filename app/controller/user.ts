@@ -20,7 +20,7 @@ export default class UserController extends BaseController {
             return;
         }
         let data = await this.ctx.service.user.register(this.params);
-        if (_.isEmpty(data)) {
+        if (!_.isEmpty(data)) {
             this.success({ data: '注册成功~' })
         } else {
             this.failure({ state: 423, msg: '用户已存在~' })

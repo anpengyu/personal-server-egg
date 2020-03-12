@@ -8,19 +8,23 @@ const jwt = require('jsonwebtoken')
 
 export default class AccountService extends BaseService {
 
+    private userRepository = getRepository(User);
+
     public async register(data: any) {
-        const userRepository = getRepository(User);
-        let userModel = await userRepository.findOne({ username: data.username });
+        let userModel = await User.findOne({ username: data.username });
         if (_.isEmpty(userModel)) {
-            return await userRepository.save(data);
+            // let user = new User();
+            let user = Object.assign(new User(),data);
+            user.hashPassword();
+            console.log('user',user)
+            return await User.save(user);
         } else {
-            return userModel;
+            return {};
         }
     }
 
     public async login(data: any) {
-        const userRepository = getRepository(User);
-        let userModel: any = await userRepository.findOne({ username: data.username });
+        let userModel: any = await this.userRepository.findOne({ username: data.username });
         if (_.isEmpty(userModel)) {
             return { state: 423, msg: '用户不存在' };
         }
@@ -35,7 +39,7 @@ export default class AccountService extends BaseService {
             loginTime
         }, KEYS)
         this.app.redis.set(token, userModel.id);
-        this.app.redis.set('loginTime',loginTime)
+        this.app.redis.set('loginTime', loginTime)
         return { state: 0, token };
     }
 }

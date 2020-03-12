@@ -1,19 +1,25 @@
-import { Entity, Column, BaseEntity,PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from "typeorm";
+import bcrypt = require('bcryptjs');
 
 @Entity('user')
-export default class User extends BaseEntity{
+export default class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
-    @Column({default:''})
-    address: string;
-    @Column()
+    @Column({ unique: true })
     username: string;
     @Column()
-    password: string;
+    phone: string;
     @Column()
-    repassword: string;
-    @Column({default:''})
+    password: string;
+    @Column({ nullable: true })
+
+    address: string;
+    @Column({ default: '' })
     sex: string;
-    @Column({default:''})
+    @Column({ default: '' })
     email: string;
+
+    hashPassword(){
+        this.password = bcrypt.hashSync(this.password,10);
+    }
 }

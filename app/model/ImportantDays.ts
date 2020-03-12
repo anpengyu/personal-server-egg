@@ -4,9 +4,9 @@ import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, U
 export default class ImportantDays extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
-    @Column()
+    @Column({unique:true})
     title: string;
-    @Column()
+    @Column({unique:true})
     date: string;
     @Column()
     mark: string;
