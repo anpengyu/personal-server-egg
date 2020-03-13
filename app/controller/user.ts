@@ -10,13 +10,31 @@ export default class UserController extends BaseController {
             ctx.validate({
                 username: { type: constants.VALIDATE_USERNAME, },
                 password: { type: constants.VALIDATE_PASSWORD },
-                repassword: { type: constants.VALIDATE_RE_PASSWORD }
+                repassword: { type: constants.VALIDATE_RE_PASSWORD },
+                phone: { type: constants.VALIDATE_PHONE }
             });
             if (!_.eq(password, repassword)) {
                 throw ({ errors: [{ message: '两次密码不一致' }] })
             }
         } catch (err) {
-            this.failure({ state: 422, msg: err.errors[0].message });
+            let msg = '';
+            if (_.eq('missing_field', err.errors[0].code)) {
+                switch (err.errors[0].field) {
+                    case 'username':
+                        msg = '用户名不能为空'
+                        break;
+                    case 'password':
+                        msg = '密码不能为空'
+                        break;
+                    case 'repassword':
+                        msg = '确认密码不能为空'
+                        break;
+                    case 'phone':
+                        msg = '手机号码不能为空'
+                        break;
+                }
+            }
+            this.failure({ state: 422, msg: msg || err.errors[0].message });
             return;
         }
         let data = await this.ctx.service.user.register(this.params);
@@ -35,7 +53,20 @@ export default class UserController extends BaseController {
                 password: { type: constants.VALIDATE_PASSWORD }
             });
         } catch (err) {
-            this.failure({ state: 422, msg: err.errors[0].message });
+            let msg = '';
+            if (_.eq('missing_field', err.errors[0].code)) {
+                switch (err.errors[0].field) {
+                    case 'username':
+                        msg = '用户名不能为空'
+                        break;
+                    case 'password':
+                        msg = '密码不能为空'
+                        break;
+                }
+            }
+
+            console.log('error2', err)
+            this.failure({ state: 422, msg: msg || err.errors[0].message });
             return;
         }
         let data: any = await this.ctx.service.user.login(this.params);

@@ -2,7 +2,7 @@ import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, U
 
 @Entity('important_days')
 export default class ImportantDays extends BaseEntity {
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn()
     id: string;
     @Column({unique:true})
     title: string;

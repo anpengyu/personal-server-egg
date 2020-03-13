@@ -59,6 +59,7 @@ const errorCode = {
 };
 // 错误helper
 const errorHelper = (code: number, msg?: string) => {
+  console.log('error')
   return {
     code,
     msg: msg || errorCode[code],
@@ -78,8 +79,8 @@ const notLogin = (ctx: Context) => {
 
 };
 
-const tokenExpired=(ctx:Context)=>{
-  ctx.body = errorHelper(401,'token过期，请重新登陆');
+const tokenExpired = (ctx: Context) => {
+  ctx.body = errorHelper(401, 'token过期，请重新登陆');
   ctx.status = 401;
   return false;
 }
@@ -96,8 +97,19 @@ const currentDate = () => {
   // var MS = now.getMilliseconds();//获取毫秒
   return year + '-' + month + '-' + date + '-' + hour + '-' + minu + '-' + sec;
 }
+
+const isPoneAvailable = (pone) => {
+  var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+  if (!myreg.test(pone)) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 export default {
   notLogin,
   currentDate,
-  tokenExpired
+  tokenExpired,
+  isPoneAvailable
 }

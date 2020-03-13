@@ -1,6 +1,6 @@
 import BaseService from '../core/BaseService';
 import User from '../model/User';
-import { getRepository } from 'typeorm';
+import { getRepository,getManager } from 'typeorm';
 import { KEYS } from '../extend/Constant';
 import helper from '../extend/helper';
 const _ = require('lodash');
@@ -13,8 +13,7 @@ export default class AccountService extends BaseService {
     public async register(data: any) {
         let userModel = await User.findOne({ username: data.username });
         if (_.isEmpty(userModel)) {
-            // let user = new User();
-            let user = Object.assign(new User(),data);
+            let user = _.assign(new User(),data);
             user.hashPassword();
             console.log('user',user)
             return await User.save(user);
@@ -28,8 +27,10 @@ export default class AccountService extends BaseService {
         if (_.isEmpty(userModel)) {
             return { state: 423, msg: '用户不存在' };
         }
-        console.log(userModel, userModel.password, data.password)
-        if (!_.eq(userModel.password, data.password)) {
+        const entityManager = getManager(); // 你也可以通过 getConnection().manager 获取
+        const user = await entityManager.findOne(User);
+        let validatPassword = await user?.validatPassword(data.password)
+        if (!validatPassword) {
             return { state: 424, msg: '密码错误' };
         }
         let loginTime = helper.currentDate();
