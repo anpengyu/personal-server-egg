@@ -11,7 +11,7 @@ module.exports = app => {
         }
     });
     validator.addRule(constants.VALIDATE_PASSWORD, (_rule: any, value: string | any[]) => {
-        console.log('ssssss')
+        console.log('ssssss',_rule)
         if (value.length < 6 || value.length > 12) {
             return "密码的长度应该在6-10之间";
         }

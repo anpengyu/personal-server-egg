@@ -40,6 +40,6 @@ export default class AccountService extends BaseService {
         }, KEYS)
         this.app.redis.set(token, userModel.id);
         this.app.redis.set(userModel.id + 'loginTime', loginTime)
-        return { state: 0, token };
+        return {state:0,user};
     }
 }

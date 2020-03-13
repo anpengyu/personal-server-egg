@@ -1,5 +1,6 @@
 import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from "typeorm";
 import bcrypt = require('bcryptjs');
+import {Exclude} from 'class-transformer';
 
 @Entity('user')
 export default class User extends BaseEntity {
@@ -9,10 +10,11 @@ export default class User extends BaseEntity {
     username: string;
     @Column()
     phone: string;
+
     @Column()
+    @Exclude()
     password: string;
     @Column({ nullable: true })
-
     address: string;
     @Column({ default: '' })
     sex: string;

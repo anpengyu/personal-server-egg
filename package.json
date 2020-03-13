@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
     "egg": "^2.26.0",
     "egg-mysql": "^3.0.0",

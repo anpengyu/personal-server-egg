@@ -1,5 +1,7 @@
 import { Controller } from 'egg';
 import { Response } from './Type';
+import { classToPlain } from 'class-transformer';
+// import { classToClass} from 'class-transformer';
 
 export default class BaseController extends Controller {
     params: any = '';
@@ -30,11 +32,12 @@ export default class BaseController extends Controller {
     success(success: Response.Success) {
         const { data, state, pagination } = success;
         const { ctx } = this;
+
         ctx.body = {
             code: 0,
             msg: 'OK',
             result: {
-                data: data || undefined,
+                data: classToPlain(data) || undefined,
                 pagination: pagination || undefined
             }
         }
@@ -45,7 +48,6 @@ export default class BaseController extends Controller {
         const { state, data, code, msg } = err;
         const { ctx } = this;
         const defaultCode = (state >= 200 && state < 300) ? 0 : state;
-
         ctx.body = {
             code: Number(code || defaultCode),
             msg: msg || ctx.helper.errorCode[String(state)],

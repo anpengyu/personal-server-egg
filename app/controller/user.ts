@@ -36,11 +36,12 @@ export default class UserController extends BaseController {
     }
 
     public async logout() {
-        const { app } = this;
+        const { app  } = this;
+        console.log('this.ctx',this.ctx)
         const userId = await app.redis.get(this.token)
         this.app.redis.set(this.token,'');
         this.app.redis.set(userId + 'loginTime', '')
-        this.success({ data: "退出成功" })
+        this.success({ data: "退出登录成功" })
     }
 
     public async findPsw() {
