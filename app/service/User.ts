@@ -1,6 +1,6 @@
 import BaseService from '../core/BaseService';
 import User from '../model/User';
-import { getRepository,getManager } from 'typeorm';
+import { getRepository, getManager } from 'typeorm';
 import { KEYS } from '../extend/Constant';
 import helper from '../extend/helper';
 const _ = require('lodash');
@@ -13,7 +13,7 @@ export default class AccountService extends BaseService {
     public async register(data: any) {
         let userModel = await User.findOne({ username: data.username });
         if (_.isEmpty(userModel)) {
-            let user = _.assign(new User(),data);
+            let user = _.assign(new User(), data);
             user.hashPassword();
             return await User.save(user);
         } else {
@@ -39,7 +39,7 @@ export default class AccountService extends BaseService {
             loginTime
         }, KEYS)
         this.app.redis.set(token, userModel.id);
-        this.app.redis.set('loginTime', loginTime)
+        this.app.redis.set(userModel.id + 'loginTime', loginTime)
         return { state: 0, token };
     }
 }

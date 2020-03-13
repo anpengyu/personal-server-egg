@@ -19,7 +19,7 @@ const errorCode = {
   305: 'use proxy',
   307: 'temporary redirect',
   400: 'bad request',
-  401: 'unauthorized',
+  401: '您还未登录，请登录后再试',
   402: 'payment required',
   403: 'forbidden',
   404: 'not found',
@@ -59,7 +59,6 @@ const errorCode = {
 };
 // 错误helper
 const errorHelper = (code: number, msg?: string) => {
-  console.log('error')
   return {
     code,
     msg: msg || errorCode[code],

@@ -28,6 +28,6 @@ export default (app: Application) => {
 
   router.post('/user/register',user.register);
   router.post('/user/login',user.login);
-  router.get('/user/logout',user.logout);
+  router.post('/user/logout',authentication(app),user.logout);
   router.get('/user/findPsw',user.findPsw);
 };
