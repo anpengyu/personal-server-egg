@@ -18,8 +18,8 @@ export default function (app) {
     //   // let savedPhotos = await connection.manager.find(WorkType);
     //   // console.log("All photos from the db: ", savedPhotos);
     // }).catch(error => console.log(error));
-    const connection = await createConnection();
-    console.log('connection',connection)
+    await createConnection();
+    // console.log('connection',connection)
     const directory = path.join(app.config.baseDir, 'app/validate');
     app.loader.loadToApp(directory, 'validate');
   })

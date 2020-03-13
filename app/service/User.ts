@@ -15,7 +15,6 @@ export default class AccountService extends BaseService {
         if (_.isEmpty(userModel)) {
             let user = _.assign(new User(),data);
             user.hashPassword();
-            console.log('user',user)
             return await User.save(user);
         } else {
             return {};
@@ -25,13 +24,13 @@ export default class AccountService extends BaseService {
     public async login(data: any) {
         let userModel: any = await this.userRepository.findOne({ username: data.username });
         if (_.isEmpty(userModel)) {
-            return { state: 423, msg: '用户不存在' };
+            return { state: 422, msg: '用户不存在' };
         }
         const entityManager = getManager(); // 你也可以通过 getConnection().manager 获取
         const user = await entityManager.findOne(User);
         let validatPassword = await user?.validatPassword(data.password)
         if (!validatPassword) {
-            return { state: 424, msg: '密码错误' };
+            return { state: 422, msg: '密码错误' };
         }
         let loginTime = helper.currentDate();
         let token = jwt.sign({
