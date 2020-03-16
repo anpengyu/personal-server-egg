@@ -1,5 +1,4 @@
-import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
-import User from './User';
+import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('card_list')
 export default class Card extends BaseEntity {
@@ -25,13 +24,9 @@ export default class Card extends BaseEntity {
     @Column()
     userid: number;
 
-    @ManyToOne(() => User, user => user.cards)
-    author: User;
 
     fullName(): number {
         const { type, name } = this;
-        console.log('type', type)
-        console.log('name', name)
         return Number(type) + Number(name)
     }
 }

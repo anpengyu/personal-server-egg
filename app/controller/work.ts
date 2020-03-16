@@ -49,29 +49,26 @@ export default class HomeController extends BaseController {
 
 
     public async addWorkName() {
-        const { ctx } = this;
-        let currentUser = ctx.req['currentUser']
-        console.log(currentUser)
+        // const { ctx } = this;
+        // let currentUser = ctx.req['currentUser']
         let work = new WorkName();
         work.title = this.params.title;
         work.workTypeId = this.params.workTypeId;
-        work.author = currentUser;
+        // work.author = currentUser;
         work.save();
     }
 
     public async updateWorkName() {
-        const { ctx } = this;
-        console.log('this.params',this.params)
-        let currentUser = ctx.req['currentUser']
+        // const { ctx } = this;
+        // let currentUser = ctx.req['currentUser']
         let data = await WorkName.findOneOrFail(this.params.id);
         data.title = this.params.title;
-        console.log('data',data)
-        if (data.author.id != currentUser.id) {
-            console.log('不是当前登录用户')
-        } else {
-            data.save();
-            // this.success({ data })
-        }
+        // if (data.author.id != currentUser.id) {
+        //     console.log('不是当前登录用户')
+        // } else {
+        //     data.save();
+        //     // this.success({ data })
+        // }
 
     }
     public async loadWorkName() {

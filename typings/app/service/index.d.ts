@@ -13,6 +13,7 @@ import ExportProject from '../../../app/service/Project';
 import ExportTest from '../../../app/service/Test';
 import ExportUser from '../../../app/service/User';
 import ExportWork from '../../../app/service/Work';
+import ExportBlogArticle from '../../../app/service/blog/article';
 
 declare module 'egg' {
   interface IService {
@@ -23,5 +24,8 @@ declare module 'egg' {
     test: AutoInstanceType<typeof ExportTest>;
     user: AutoInstanceType<typeof ExportUser>;
     work: AutoInstanceType<typeof ExportWork>;
+    blog: {
+      article: AutoInstanceType<typeof ExportBlogArticle>;
+    }
   }
 }

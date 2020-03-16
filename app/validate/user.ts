@@ -21,6 +21,7 @@ module.exports = app => {
             return "确认密码的长度应该在6-10之间";
         }
     });
+    
     validator.addRule(constants.VALIDATE_PHONE, (_rule: any, value: string | any[]) => {
         if (value.length == 11) {
             let isPhone = helper.isPoneAvailable(value);

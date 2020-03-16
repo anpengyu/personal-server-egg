@@ -3,7 +3,7 @@ import authentication from './middleware/authentication';
 
 export default (app: Application) => {
   const { controller, router } = app;
-  const { work,project,account,card,accountBook,user } = controller;
+  const { work,project,account,card,accountBook } = controller;
 
   router.get('/', controller.home.index);
   // 获取项目类型列表
@@ -19,19 +19,16 @@ export default (app: Application) => {
   router.get('/loadAccountTitle', account.loadAccountTitle);
   router.get('/loadAccountType', account.loadAccountType);
   // const jwt = app.passport.authenticate('jwt', {session:false, successReturnToOrRedirect:null});
-  router.get('/loadCard',authentication(app), card.loadCard);
+  router.get('/loadCard', card.loadCard);
   router.get('/addWorkName',authentication(app), work.addWorkName)
   router.post('/updateWorkName',authentication(app), work.updateWorkName)
-  router.get('/loadWorkName',authentication(app), work.loadWorkName)
+  // router.get('/loadWorkName',authentication(app), work.loadWorkName)
   router.get('/loadAccountBook',authentication(app), accountBook.loadAccountBook);
-  router.post('/addAccountBook', authentication(app), accountBook.addAccountBook);
+  router.post('/addAccountBook',   accountBook.addAccountBook);
   router.get('/loadAccountBookType', accountBook.loadAccountBookType);
   router.get('/loadAccountBookTypeDetail', accountBook.loadAccountBookTypeDetail);
   
-  router.post('/user/register',user.register);
-  router.post('/user/login',user.login);
-  router.post('/user/logout',authentication(app),user.logout);
-  router.get('/user/findPsw',user.findPsw);
 
-  
+  require('./router/user')(app)
+  require('./router/blog')(app)
 };

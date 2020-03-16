@@ -1,5 +1,5 @@
-import { Entity, Column,BaseEntity, PrimaryGeneratedColumn, ManyToOne ,RelationId} from "typeorm";
-import User from './User';
+import { Entity, Column,BaseEntity, PrimaryGeneratedColumn } from "typeorm";
+
 
 @Entity('work_name')
 export default class WorkName extends BaseEntity{
@@ -10,9 +10,9 @@ export default class WorkName extends BaseEntity{
     @Column({ name: 'work_type_id' })
     workTypeId: string;
 
-    @ManyToOne(() => User, user => user.cards,{eager:true})
-    author: User;
+    // @ManyToOne(() => User, user => user.cards,{eager:true})
+    // author: User;
 
-    @RelationId((workname:WorkName)=>workname.author)
-    userId:number
+    // @RelationId((workname:WorkName)=>workname.author)
+    // userId:number
 }

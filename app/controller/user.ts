@@ -5,7 +5,7 @@ import userValidate from '../validate/userValidate';
 
 export default class UserController extends BaseController {
 
-    public async register() {
+    async register() {
         const { ctx } = this;
         let err: any = userValidate.registerValidate(ctx, this.params);
         if (!_.isEmpty(err)) {
@@ -20,7 +20,7 @@ export default class UserController extends BaseController {
         }
     }
 
-    public async login() {
+    async login() {
         const { ctx } = this;
         let err: any = userValidate.loginValidate(ctx);
         if (!_.isEmpty(err)) {
@@ -35,7 +35,7 @@ export default class UserController extends BaseController {
         }
     }
 
-    public async logout() {
+    async logout() {
         const { app  } = this;
         console.log('this.ctx',this.ctx)
         const userId = await app.redis.get(this.token)
@@ -44,8 +44,13 @@ export default class UserController extends BaseController {
         this.success({ data: "退出登录成功" })
     }
 
-    public async findPsw() {
+    async findPsw() {
 
         this.success({ data: "findPsw ok" })
+    }
+
+    async userInfo() {
+
+        this.success({ data: "用户信息" })
     }
 }

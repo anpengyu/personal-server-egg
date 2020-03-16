@@ -7,3 +7,6 @@ export const VALIDATE_ADDRESS = 'address';
 export const VALIDATE_PHONE='phone';
 
 export const KEYS = '202003031516_900321';
+
+export const VALIDATE_ARTICLE_TITLE = 'articleTitle'
+export const VALIDATE_ARTICLE_CONTENT = 'articleContent'

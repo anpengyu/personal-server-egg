@@ -15,6 +15,7 @@ import ExportUser from '../../../app/model/User';
 import ExportWork from '../../../app/model/Work';
 import ExportWorkName from '../../../app/model/WorkName';
 import ExportWorkType from '../../../app/model/WorkType';
+import ExportBlogArticle from '../../../app/model/blog/article';
 
 declare module 'egg' {
   interface IModel {
@@ -31,5 +32,8 @@ declare module 'egg' {
     Work: ReturnType<typeof ExportWork>;
     WorkName: ReturnType<typeof ExportWorkName>;
     WorkType: ReturnType<typeof ExportWorkType>;
+    Blog: {
+      Article: ReturnType<typeof ExportBlogArticle>;
+    }
   }
 }

@@ -4,7 +4,6 @@ export default class CardController extends BaseController {
 
     public async loadCard() {
         const { ctx, app } = this;
-        console.log('bbbbbbbb',ctx.req['currentUser']);
         const userId = await app.redis.get(this.token)
         let data = await ctx.service.card.loadCard(userId);
         if (!_.isEmpty(data)) {
