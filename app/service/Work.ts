@@ -23,8 +23,13 @@ export default class WorkService extends BaseService {
     }
 
     public async loadWorkName(id: string) {
+        let {current,pageSize} = this.params;
         const workNameRepository = getRepository(WorkName);
-        let workNameModel = await workNameRepository.find({ workTypeId: id });
+        console.log(id)
+        // let workNameModel = await workNameRepository.find({ workTypeId: id });
+        // let workNameModel = await workNameRepository.find();
+        let workNameModel = await workNameRepository.findAndCount({take:pageSize,skip:(current-1)*pageSize})
+        console.log(await WorkName.count())
         return workNameModel;
     }
 

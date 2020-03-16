@@ -1,6 +1,8 @@
-import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, OneToMany, BeforeInsert } from "typeorm";
 import bcrypt = require('bcryptjs');
-import {Exclude} from 'class-transformer';
+import { Exclude } from 'class-transformer';
+import Card from './Card';
+import WorkName from './WorkName';
 
 @Entity('user')
 export default class User extends BaseEntity {
@@ -21,6 +23,10 @@ export default class User extends BaseEntity {
     @Column({ default: '' })
     email: string;
 
+    @OneToMany(() => WorkName, card => card.author)
+    cards: Card[]
+
+    @BeforeInsert()
     hashPassword() {
         this.password = bcrypt.hashSync(this.password, 10);
     }

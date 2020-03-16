@@ -20,14 +20,18 @@ export default (app: Application) => {
   router.get('/loadAccountType', account.loadAccountType);
   // const jwt = app.passport.authenticate('jwt', {session:false, successReturnToOrRedirect:null});
   router.get('/loadCard',authentication(app), card.loadCard);
-
+  router.get('/addWorkName',authentication(app), work.addWorkName)
+  router.post('/updateWorkName',authentication(app), work.updateWorkName)
+  router.get('/loadWorkName',authentication(app), work.loadWorkName)
   router.get('/loadAccountBook',authentication(app), accountBook.loadAccountBook);
   router.post('/addAccountBook', authentication(app), accountBook.addAccountBook);
   router.get('/loadAccountBookType', accountBook.loadAccountBookType);
   router.get('/loadAccountBookTypeDetail', accountBook.loadAccountBookTypeDetail);
-
+  
   router.post('/user/register',user.register);
   router.post('/user/login',user.login);
   router.post('/user/logout',authentication(app),user.logout);
   router.get('/user/findPsw',user.findPsw);
+
+  
 };

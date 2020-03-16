@@ -1,9 +1,8 @@
-import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn } from "typeorm";
-
+import { Entity, Column } from "typeorm";
+import BaseModel from '../core/BaseModel';
 @Entity('important_days')
-export default class ImportantDays extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: string;
+export default class ImportantDays extends BaseModel {
+
     @Column({unique:true})
     title: string;
     @Column({unique:true})
@@ -18,11 +17,6 @@ export default class ImportantDays extends BaseEntity {
     type: string;
     @Column()
     bg: string;
-    @CreateDateColumn()
-    createDate: Date;
-    @UpdateDateColumn()
-    updateDate: Date;
-    @VersionColumn()
-    versionColumn: Date;
+
 
 }

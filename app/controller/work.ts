@@ -1,10 +1,11 @@
 import BaseController from '../core/BaseController';
+import WorkName from '../model/WorkName';
 
 export default class HomeController extends BaseController {
     //获取项目类型
     public async loadWorkType() {
         const { ctx } = this;
-      
+
         let typeData = await ctx.service.work.loadWorkType();
         let count = await ctx.service.work.loadCountForFlag();
         let data = {
@@ -41,8 +42,40 @@ export default class HomeController extends BaseController {
     public async deleteWork() {
         const { ctx } = this;
         let data = await ctx.service.work.delWork(this.params.id);
-        if(data){
+        if (data) {
             this.success({ data })
         }
+    }
+
+
+    public async addWorkName() {
+        const { ctx } = this;
+        let currentUser = ctx.req['currentUser']
+        console.log(currentUser)
+        let work = new WorkName();
+        work.title = this.params.title;
+        work.workTypeId = this.params.workTypeId;
+        work.author = currentUser;
+        work.save();
+    }
+
+    public async updateWorkName() {
+        const { ctx } = this;
+        console.log('this.params',this.params)
+        let currentUser = ctx.req['currentUser']
+        let data = await WorkName.findOneOrFail(this.params.id);
+        data.title = this.params.title;
+        console.log('data',data)
+        if (data.author.id != currentUser.id) {
+            console.log('不是当前登录用户')
+        } else {
+            data.save();
+            // this.success({ data })
+        }
+
+    }
+    public async loadWorkName() {
+        let data = WorkName.find();
+        this.success({ data })
     }
 }

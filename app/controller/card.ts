@@ -12,7 +12,6 @@ export default class CardController extends BaseController {
         } else {
             this.failure({ state: 425, msg: '用户名已存在' });
         }
-
-
     }
+
 }

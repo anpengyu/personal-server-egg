@@ -14,7 +14,7 @@ export default class AccountService extends BaseService {
         let userModel = await User.findOne({ username: data.username });
         if (_.isEmpty(userModel)) {
             let user = _.assign(new User(), data);
-            user.hashPassword();
+            // user.hashPassword();
             return await User.save(user);
         } else {
             return {};
@@ -40,6 +40,6 @@ export default class AccountService extends BaseService {
         }, KEYS)
         this.app.redis.set(token, userModel.id);
         this.app.redis.set(userModel.id + 'loginTime', loginTime)
-        return {state:0,user};
+        return {state:0,token};
     }
 }
