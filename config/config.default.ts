@@ -11,33 +11,42 @@ export default (appInfo: EggAppInfo) => {
     // ignore: [ '/api/v1/test/', '/public/' ], // 哪些请求不需要认证
   }
   //关闭csrf
-  config.security = {
-    csrf: {
-      enable: false,
-      ignoreJSON: true,
-    },
-  };
+  // config.security = {
+  //   csrf: {
+  //     enable: false,
+  //     ignoreJSON: true,
+  //   },
+  // };
   // add your egg config in here
   config.middleware = [];
-
+  config.security = {
+    csrf: {
+      enable: false
+    },
+    domainWhiteList: ['*']
+  };
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
+  };
   // add your special config in here
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
   };
 
   let errorCode = {
-    1062:'唯一值重复'
+    1062: '唯一值重复'
   }
   config.onerror = {
     all(err, ctx) {
       console.log('框架错误拦截', err);
-        ctx.status = 400;
-        ctx.body = JSON.stringify({
-          code:400,
-          data: null,
-          message:  errorCode[err.errno],
-          success: false
-        });
+      ctx.status = 400;
+      ctx.body = JSON.stringify({
+        code: 400,
+        data: null,
+        message: errorCode[err.errno],
+        success: false
+      });
     }
   }
   // const mysql = {

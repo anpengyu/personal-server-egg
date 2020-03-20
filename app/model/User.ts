@@ -7,6 +7,7 @@ import Article from './blog/article';
 export default class User extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     id: number;
+    
     @Column({ unique: true })
     username: string;
     @Column()
@@ -21,6 +22,11 @@ export default class User extends BaseEntity {
     sex: string;
     @Column({ default: '' })
     email: string;
+
+    @Column({ default: '' })
+    nickname: string;
+    @Column({ default: '' })
+    headImg: string;
 
     // 文章
     @OneToMany(() => Article, article => article.user)

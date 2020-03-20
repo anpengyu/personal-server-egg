@@ -1,5 +1,6 @@
 import { Service } from 'egg';
 import { getConnection, getRepository } from 'typeorm';
+import User from '../model/User';
 let _ = require('lodash');
 
 /**
@@ -10,16 +11,18 @@ export default class BaseService extends Service {
     params: any = '';
     offset: number = 0;
     limit: number = 10;
+    currentUser: User;
     constructor(request: any) {
         super(request);
         const { ctx } = this;
-        if(ctx.request.method=='GET'){
+        if (ctx.request.method == 'GET') {
             this.params = ctx.query;
-        }else{
+        } else {
             this.params = ctx.request.body
         }
         this.offset = _.isEmpty(this.params.pageNum) ? 0 : ((Number(this.params.pageNum) - 1) * (Number(this.params.pageSize) || 10))
         this.limit = Number(this.params.pageSize) || 10;
+        this.currentUser = ctx.req['currentUser']
     }
 
     //获取分页每页条数、页数、总条数

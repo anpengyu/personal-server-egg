@@ -12,21 +12,27 @@ export default class ArticleController extends BaseController {
 
     // 获取最新文章
     async loadNewArticle() {
-        const { ctx } = this;
-        ctx.body = await ctx.service.account.loadAccount();
+        let data = await this.article.loadNewArticle();
+        this.success({ data })
     }
-
+    //文章详情
+    async loadArticleDetail() {
+        console.log('id = ',this.params.id)
+        let data = await this.article.loadArticleDetail(this.params.id);
+        this.success({ data })
+    }
+    
     // 获取热门文章
     async loadHotArticle() {
-        const { ctx } = this;
-        ctx.body = await ctx.service.account.loadAccount();
+        let data = await this.article.loadHotArticle();
+        this.success({ data })
     }
 
     //获取自己的文章
     async loadOwnArticle() {
         // const { ctx } = this;
-        let data= await this.article.loadOwnArticle(this.params);
-        this.success({data})
+        let data = await this.article.loadOwnArticle(this.params);
+        this.success({ data })
     }
 
     //添加文章
@@ -38,12 +44,20 @@ export default class ArticleController extends BaseController {
             return;
         }
         let data = await this.article.addArticle(this.params);
-        this.success({data})
+        if (_.isEmpty(data)) {
+            this.failure({ state: 425, msg: '文章标题重复，请修改标题~' });
+        } else {
+            this.success({ data })
+        }
     }
 
     //删除文章
     async deleteArticle() {
-        const { ctx } = this;
-        ctx.body = await ctx.service.account.loadAccount();
+        let data = await this.article.deleteArticle(this.params.id);
+        if (!_.isEmpty(data)) {
+            this.success({ data })
+        } else {
+            this.failure({ state: 425, msg:'只能删除自己的帖子'});
+        }
     }
 }

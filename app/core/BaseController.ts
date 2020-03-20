@@ -41,6 +41,9 @@ export default class BaseController extends Controller {
                 pagination: pagination || undefined
             }
         }
+        console.log('ctx.response',ctx.response)
+
+        
         ctx.status = state || 200;
     }
 

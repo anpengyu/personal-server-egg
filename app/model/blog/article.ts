@@ -6,26 +6,26 @@ import User from '../User';
 @Entity('article')
 export default class Article extends BaseModel {
 
-    @Column({name:'article_content'})
+    @Column({ name: 'article_content' })
     articleContent: string;//内容
 
-    @Column({name:'article_title'})
+    @Column({ name: 'article_title' })
     articleTitle: string;//标题
 
-    @Column({name:'article_praise_count',default:0})
+    @Column({ name: 'article_praise_count', default: 0 })
     articlePraiseCount: number;//点赞数
 
-    @Column({name:'article_dislike_count',default:0})
+    @Column({ name: 'article_dislike_count', default: 0 })
     articledislikeCount: number;//踩数
 
-    @Column({name:'article_page_view',default:0})
+    @Column({ name: 'article_page_view', default: 0 })
     articlePageView: number;//浏览量
 
-    @Column({name:'article_comment_count',default:0})
+    @Column({ name: 'article_comment_count', default: 0 })
     articleCommentCount: number;//评论数
 
     //发帖距现在多长时间
-    times(date:Date): string {
+    times(date: Date): string {
         //获取js 时间戳
         var time = new Date().getTime();
         //去掉 js 时间戳后三位，与php 时间戳保持一致
@@ -54,6 +54,6 @@ export default class Article extends BaseModel {
         }
     }
 
-    @ManyToOne(() => User, user => user.articles,{eager:true})
+    @ManyToOne(() => User, user => user.articles, { eager: true })
     user: User;
 }

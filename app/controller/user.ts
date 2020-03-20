@@ -22,9 +22,12 @@ export default class UserController extends BaseController {
 
     async login() {
         const { ctx } = this;
+        console.log('.....................',this.params)
         let err: any = userValidate.loginValidate(ctx);
+
+        console.log('err',err)
         if (!_.isEmpty(err)) {
-            this.failure({ state: 422, msg: err });
+            this.failure({ state: 422, msg:err.msg });
             return;
         }
         let data: any = await this.ctx.service.user.login(this.params);
