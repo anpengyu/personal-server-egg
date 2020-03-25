@@ -23,13 +23,12 @@ export default class WorkService extends BaseService {
     }
 
     public async loadWorkName(id: string) {
+        console.log('id',id)
         let {current,pageSize} = this.params;
         const workNameRepository = getRepository(WorkName);
-        console.log(id)
         // let workNameModel = await workNameRepository.find({ workTypeId: id });
         // let workNameModel = await workNameRepository.find();
         let workNameModel = await workNameRepository.findAndCount({take:pageSize,skip:(current-1)*pageSize})
-        console.log(await WorkName.count())
         return workNameModel;
     }
 
@@ -40,7 +39,6 @@ export default class WorkService extends BaseService {
 
     // 删除一条工作记录
     public async delWork(id: string) {
-        console.log('id:', id);
         const workNameRepository = getRepository(Work);
         let workToRemove: any = await workNameRepository.findOne(id);
         const removeResponse = await workNameRepository.remove(workToRemove);
@@ -48,7 +46,7 @@ export default class WorkService extends BaseService {
     }
 
     public async addWorks(params: any) {
-        console.log('params', params)
+
         const workRepository = getRepository(Work);
         let addNewTypeResponse: any = {};
         if (params.addNewType == 'true') {
@@ -57,7 +55,6 @@ export default class WorkService extends BaseService {
                 title: params.workType
             }
             addNewTypeResponse = await workTypeRepository.save(typeData);
-            console.log('addNewTypeResponse', addNewTypeResponse);
         }
         if (params.addNewName == 'true') {
             const workNameRepository = getRepository(WorkName);
@@ -72,7 +69,7 @@ export default class WorkService extends BaseService {
                 workTypeId,
             }
             let addNewNameResponse = await workNameRepository.save(nameData);
-            console.log('addNewNameResponse', addNewNameResponse);
+            console.log('addNewNameResponse',addNewNameResponse)
         }
         let data: any = {
             time: params.time,
@@ -95,7 +92,7 @@ export default class WorkService extends BaseService {
                 workToUpdate.butt_joint = params.developer;
                 workToUpdate.content = params.des;
                 // workToUpdate.flag = params.flag;
-                console.log('data', data);
+
             } else {
                 workToUpdate.flag = params.flag;
                 if (!_.isEmpty(params.time)) {
@@ -112,7 +109,7 @@ export default class WorkService extends BaseService {
                     }
                 }
             }
-            console.log('workToUpdate',workToUpdate);
+
             response = await workRepository.save(workToUpdate);
         } else {
             response = await workRepository.save(data);

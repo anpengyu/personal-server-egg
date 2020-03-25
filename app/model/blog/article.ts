@@ -6,11 +6,14 @@ import User from '../User';
 @Entity('article')
 export default class Article extends BaseModel {
 
-    @Column({ name: 'article_content' })
-    articleContent: string;//内容
-
+    @Column({ name: 'article_content' ,type:'text'})
+    articleContent;//内容
+    
     @Column({ name: 'article_title' })
     articleTitle: string;//标题
+
+    @Column({ name: 'article_subtitle',default:''})
+    articleSubtitle:string;//副标题
 
     @Column({ name: 'article_praise_count', default: 0 })
     articlePraiseCount: number;//点赞数
@@ -25,11 +28,12 @@ export default class Article extends BaseModel {
     articleCommentCount: number;//评论数
 
     //发帖距现在多长时间
-    times(date: Date): string {
+    times(): string {
         //获取js 时间戳
         var time = new Date().getTime();
         //去掉 js 时间戳后三位，与php 时间戳保持一致
-        time = parseInt(String((time - date.getTime() * 1000) / 1000));
+        
+        time = parseInt(String((time - this.createDate.getTime() * 1000) / 1000));
 
         //存储转换值 
         var s;

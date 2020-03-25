@@ -11,7 +11,7 @@ const addArticleValidate = (ctx) => {
             articleContent: { type: VALIDATE_ARTICLE_CONTENT}
         });
     } catch (err) {
-        console.log('')
+
         let msg = '';
         if (_.eq('missing_field', err.errors[0].code)) {
             switch (err.errors[0].field) {

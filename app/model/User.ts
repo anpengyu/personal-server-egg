@@ -5,6 +5,7 @@ import Article from './blog/article';
 
 @Entity('user')
 export default class User extends BaseEntity {
+    @Exclude()
     @PrimaryGeneratedColumn("uuid")
     id: number;
     

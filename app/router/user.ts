@@ -10,5 +10,5 @@ module.exports = (app: Application) => {
     router.post('/user/logout', authentication(app), user.logout);
     router.get('/user/findPsw', user.findPsw);
 
-    router.get('/user/userInfo', user.userInfo);
+    router.post('/user/userInfo',  authentication(app),user.userInfo);
 };

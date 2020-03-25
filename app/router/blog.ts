@@ -13,7 +13,7 @@ module.exports = (app: Application) => {
   // router.resources('deleteArticle', '/blog/article/deleteArticle', blog.article.deleteArticle);
   router.get('/blog/comment/loadComment', authentication(app), blog.comment.loadComment)//获取评论
   router.get('/blog/comment/deleteComment', authentication(app), blog.comment.deleteComment)//删除评论
-  router.get('/blog/comment/addComment', authentication(app), blog.comment.addComment)//添加评论
+  router.post('/blog/comment/addComment', authentication(app), blog.comment.addComment)//添加评论
   router.get('/blog/comment/praise', authentication(app), blog.comment.praise)//点赞、取消点赞
 
   router.get('/blog/collect/collectArticle', authentication(app), blog.collect.collectArticle)//收藏、取消收藏

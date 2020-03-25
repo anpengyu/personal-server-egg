@@ -13,7 +13,7 @@ const registerValidate = (ctx, params) => {
             throw ({ errors: [{ message: '两次密码不一致' }] })
         }
     } catch (err) {
-        console.log('err',err)
+
         let msg = '';
         if (_.eq('missing_field', err.errors[0].code)) {
             switch (err.errors[0].field) {

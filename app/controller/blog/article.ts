@@ -17,7 +17,6 @@ export default class ArticleController extends BaseController {
     }
     //文章详情
     async loadArticleDetail() {
-        console.log('id = ',this.params.id)
         let data = await this.article.loadArticleDetail(this.params.id);
         this.success({ data })
     }
@@ -45,7 +44,7 @@ export default class ArticleController extends BaseController {
         }
         let data = await this.article.addArticle(this.params);
         if (_.isEmpty(data)) {
-            this.failure({ state: 425, msg: '文章标题重复，请修改标题~' });
+            this.failure({ state: 422, msg: '文章标题重复，请修改标题~' });
         } else {
             this.success({ data })
         }
@@ -57,7 +56,7 @@ export default class ArticleController extends BaseController {
         if (!_.isEmpty(data)) {
             this.success({ data })
         } else {
-            this.failure({ state: 425, msg:'只能删除自己的帖子'});
+            this.failure({ state: 422, msg:'只能删除自己的帖子'});
         }
     }
 }

@@ -22,12 +22,9 @@ export default class UserController extends BaseController {
 
     async login() {
         const { ctx } = this;
-        console.log('.....................',this.params)
         let err: any = userValidate.loginValidate(ctx);
-
-        console.log('err',err)
         if (!_.isEmpty(err)) {
-            this.failure({ state: 422, msg:err.msg });
+            this.failure({ state: 422, msg: err.msg });
             return;
         }
         let data: any = await this.ctx.service.user.login(this.params);
@@ -39,10 +36,9 @@ export default class UserController extends BaseController {
     }
 
     async logout() {
-        const { app  } = this;
-        console.log('this.ctx',this.ctx)
+        const { app } = this;
         const userId = await app.redis.get(this.token)
-        this.app.redis.set(this.token,'');
+        this.app.redis.set(this.token, '');
         this.app.redis.set(userId + 'loginTime', '')
         this.success({ data: "退出登录成功" })
     }
@@ -53,7 +49,11 @@ export default class UserController extends BaseController {
     }
 
     async userInfo() {
-
-        this.success({ data: "用户信息" })
+        let data: any = await this.ctx.service.user.userInfo();
+        if (data.state != 0) {
+            this.failure({ state: data.state, msg: data.msg })
+        } else {
+            this.success({ data: data })
+        }
     }
 }

@@ -2,16 +2,21 @@ import BaseService from '../../core/BaseService';
 import Article from '../../model/blog/article';
 // import { getRepository } from 'typeorm';
 let _ = require('lodash');
+let moment =require( 'moment');
 // 博客文章
 export default class ArticleService extends BaseService {
 
     async loadNewArticle() {
+               let data = moment().format(); 
+        console.log('data',data)
         let { current, pageSize } = this.params;
         return await Article.find({
             order: { createDate: 'DESC' },
             take: pageSize || 10,
             skip: (current - 1) * pageSize,
         })
+
+ 
     }
     async loadArticleDetail(id:number) {
         return await Article.findOne(id)
@@ -35,8 +40,10 @@ export default class ArticleService extends BaseService {
         } else {
             article.articleTitle = params.articleTitle;
             article.articleContent = params.articleContent;
+            article.articleSubtitle = params.articleSubtitle;
             article.user = this.currentUser;
-            return await article.save();
+            await article.save();
+            return {state:0};
         }
     }
 

@@ -40,6 +40,11 @@ export default class AccountService extends BaseService {
         }, KEYS)
         this.app.redis.set(token, userModel.id);
         this.app.redis.set(userModel.id + 'loginTime', loginTime)
-        return {state:0,token};
+        return { state: 0, token ,userModel};
+    }
+
+    public async userInfo() {
+        let userModel: any = await this.userRepository.findOne({ username: this.currentUser.username });
+        return { state: 0, userModel }
     }
 }

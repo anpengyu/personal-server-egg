@@ -9,7 +9,7 @@ export default class CardController extends BaseController {
         if (!_.isEmpty(data)) {
             this.success({ data })
         } else {
-            this.failure({ state: 425, msg: '用户名已存在' });
+            this.failure({ state: 422, msg: '用户名已存在' });
         }
     }
 

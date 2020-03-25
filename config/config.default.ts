@@ -39,7 +39,7 @@ export default (appInfo: EggAppInfo) => {
   }
   config.onerror = {
     all(err, ctx) {
-      console.log('框架错误拦截', err);
+
       ctx.status = 400;
       ctx.body = JSON.stringify({
         code: 400,

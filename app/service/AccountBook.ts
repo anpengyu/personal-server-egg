@@ -24,7 +24,6 @@ export default class AccountBookService extends BaseService {
             ...params,
             userid
         }
-        console.log('data',data)
         let AccountBookModel = await accountBookRepository.save(data)
         return AccountBookModel;
     }

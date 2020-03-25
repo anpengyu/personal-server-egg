@@ -1,14 +1,14 @@
-import { CreateDateColumn, UpdateDateColumn, VersionColumn,BaseEntity, PrimaryGeneratedColumn } from "typeorm";
-
+import { CreateDateColumn, UpdateDateColumn, VersionColumn, BaseEntity, PrimaryGeneratedColumn } from "typeorm";
+// let moment =require( 'moment');
 
 export default class BaseModel extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
-    @CreateDateColumn()
-    createDate: Date;
+    @CreateDateColumn({ comment: '创建时间'})
+    createDate:string;
     @UpdateDateColumn()
-    updateDate: Date;
+    updateDate:string;
     @VersionColumn()
-    versionColumn: Date;
+    versionColumn: number = 1;
 }
