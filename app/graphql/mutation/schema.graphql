@@ -3,7 +3,7 @@
 type Mutation {
 
   # Item
-  createItem (userID: ID!, content: String!, expire: Date): Item
+  createItem (userID: ID!, content: String!, expire: Date,time:String!): Item
   updateItem (id: ID!, content: String, expire: Date, done: Boolean): Item
   deleteItem (id: ID!): Item 
 

@@ -6,5 +6,5 @@ default: # 默认连接
   password: "anpengyu1"
   type: "mysql"
   database: "tally"
-  synchronize: true
+  synchronize: false
   entities: ["app/entity/*.ts","app/entity/*/*.ts"]

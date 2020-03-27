@@ -1,0 +1,17 @@
+
+
+type Article {
+  id: ID!
+  userId: String!
+  articleTitle:String!
+  articleContent:String!
+  articlePraiseCount:Int!
+  articleDislikeCount:Int!
+  articlePageView:Int!
+  articleCommentCount:Int!
+  user:User!
+  updated_at: Date
+  created_at: Date
+  tags:[Tag!]
+  articleSubTitle:String!
+}

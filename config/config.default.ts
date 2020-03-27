@@ -15,19 +15,29 @@ export default (appInfo: EggAppInfo) => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '202003031516_900321';
 
+  config.middleware = ['graphql'];
+
+  config.graphql = {
+    router: '/graphql',
+    // 是否加载到 app 上，默认开启
+    app: true,
+    // 是否加载到 agent 上，默认关闭
+    agent: false,
+    // 是否加载开发者工具 graphiql, 默认开启。路由同 router 字段。使用浏览器打开该可见。
+    graphiql: true,
+    // graphQL 路由前的拦截器
+    onPreGraphQL: function* (ctx) {
+      console.log('onPreGraphQL...',ctx)
+    },
+    // 开发工具 graphiQL 路由前的拦截器，建议用于做权限操作(如只提供开发者使用)
+    onPreGraphiQL: function* (ctx) { console.log('onPreGraphiQL...',ctx)},
+  }
   config.jwt = {
     enable: true,
     // ignore: [ '/api/v1/test/', '/public/' ], // 哪些请求不需要认证
   }
-  //关闭csrf
-  // config.security = {
-  //   csrf: {
-  //     enable: false,
-  //     ignoreJSON: true,
-  //   },
-  // };
   // add your egg config in here
-  config.middleware = ['graphql'];
+
   config.security = {
     csrf: {
       enable: false
@@ -48,7 +58,6 @@ export default (appInfo: EggAppInfo) => {
   }
   config.onerror = {
     all(err, ctx) {
-
       ctx.status = 400;
       ctx.body = JSON.stringify({
         code: 400,
@@ -58,20 +67,7 @@ export default (appInfo: EggAppInfo) => {
       });
     }
   }
-  // const mysql = {
-  //   client: {
-  //       type: "mysql",
-  //       host: "121.36.9.185",
-  //       port: 10086,
-  //       user: "root",
-  //       username: "root",
-  //       password: "anpengyu1",
-  //       database: "tally",
-  //     },
-  //   app: true,
-  //   agent: false,
-  // };
-  // const modelEntities = '/app/model/*.ts';
+
   config.redis = {
     client: {
       port: 6379,          // Redis port
@@ -81,8 +77,6 @@ export default (appInfo: EggAppInfo) => {
     },
   }
   return {
-    // mysql,
-    // modelEntities,
     ...config,
     ...bizConfig,
   };
