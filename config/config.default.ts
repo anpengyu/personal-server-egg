@@ -1,7 +1,16 @@
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 
 export default (appInfo: EggAppInfo) => {
-  const config = {} as PowerPartial<EggAppConfig>;
+  const config = {
+    sequelize: {
+      dialect: 'mysql',
+      database: 'tally',
+      host: '121.36.9.185',
+      port: '10086',
+      username: 'root',
+      password: 'anpengyu1',
+    },
+  } as PowerPartial<EggAppConfig>;
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '202003031516_900321';
@@ -18,7 +27,7 @@ export default (appInfo: EggAppInfo) => {
   //   },
   // };
   // add your egg config in here
-  config.middleware = [];
+  config.middleware = ['graphql'];
   config.security = {
     csrf: {
       enable: false
@@ -27,7 +36,7 @@ export default (appInfo: EggAppInfo) => {
   };
   config.cors = {
     origin: '*',
-    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS,FETCH'
   };
   // add your special config in here
   const bizConfig = {

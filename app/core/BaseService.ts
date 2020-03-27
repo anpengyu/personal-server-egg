@@ -1,6 +1,6 @@
 import { Service } from 'egg';
 import { getConnection, getRepository } from 'typeorm';
-import User from '../model/User';
+import User from '../entity/User';
 let _ = require('lodash');
 
 /**

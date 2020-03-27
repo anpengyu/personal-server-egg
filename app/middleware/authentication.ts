@@ -1,5 +1,5 @@
 import { KEYS } from '../extend/Constant';
-import User from '../model/User';
+import User from '../entity/User';
 const _ = require('lodash');
 const jwt = require('jsonwebtoken')
 

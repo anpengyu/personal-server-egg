@@ -1,8 +1,8 @@
 import BaseService from '../core/BaseService';
 import { getRepository } from 'typeorm';
-import AccountBookType from '../model/AccountBookType';
-import AccountBook from '../model/AccountBook';
-import AccountBookTypeDetail from '../model/AccountBookTypeDetail';
+import AccountBookType from '../entity/AccountBookType';
+import AccountBook from '../entity/AccountBook';
+import AccountBookTypeDetail from '../entity/AccountBookTypeDetail';
 
 
 /**

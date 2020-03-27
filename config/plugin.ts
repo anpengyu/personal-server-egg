@@ -21,7 +21,15 @@ const plugin: EggPlugin = {
   cors: {
     enable: true,
     package: 'egg-cors'
-}
+  },
+  graphql: {
+    enable: true,
+    package: 'egg-graphql',
+  },
+  sequelize: {
+    enable: true,
+    package: 'egg-sequelize',
+  },
 };
 
 export default plugin;

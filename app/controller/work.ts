@@ -1,5 +1,5 @@
 import BaseController from '../core/BaseController';
-import WorkName from '../model/WorkName';
+import WorkName from '../entity/WorkName';
 
 export default class HomeController extends BaseController {
     //获取项目类型

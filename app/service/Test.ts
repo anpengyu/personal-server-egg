@@ -1,6 +1,6 @@
 import { Service } from 'egg';
 import { getRepository } from 'typeorm';
-import WorkType from '../model/WorkType';
+import WorkType from '../entity/WorkType';
 /**
  * Test Service
  */

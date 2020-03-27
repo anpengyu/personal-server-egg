@@ -1,8 +1,8 @@
 import BaseService from '../core/BaseService';
 import { getRepository, getConnection } from 'typeorm';
-import WorkType from '../model/WorkType';
-import WorkName from '../model/WorkName';
-import Work from '../model/Work';
+import WorkType from '../entity/WorkType';
+import WorkName from '../entity/WorkName';
+import Work from '../entity/Work';
 let _ = require('lodash');
 
 /**

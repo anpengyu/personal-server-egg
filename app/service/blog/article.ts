@@ -1,5 +1,5 @@
 import BaseService from '../../core/BaseService';
-import Article from '../../model/blog/article';
+import Article from '../../entity/blog/article';
 // import { getRepository } from 'typeorm';
 let _ = require('lodash');
 let moment =require( 'moment');

@@ -1,9 +1,9 @@
 import BaseService from '../core/BaseService';
 import { getRepository } from 'typeorm';
-import Account from '../model/Account';
-import AccountTitle from '../model/AccountTitle';
-import AccountType from '../model/AccountType';
-import ImportantDays from '../model/ImportantDays';
+import Account from '../entity/Account';
+import AccountTitle from '../entity/AccountTitle';
+import AccountType from '../entity/AccountType';
+import ImportantDays from '../entity/ImportantDays';
 
 /**
  * work Service

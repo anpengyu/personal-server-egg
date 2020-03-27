@@ -1,5 +1,5 @@
 import BaseService from '../core/BaseService';
-import User from '../model/User';
+import User from '../entity/User';
 import { getRepository, getManager } from 'typeorm';
 import { KEYS } from '../extend/Constant';
 import helper from '../extend/helper';

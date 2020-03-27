@@ -7,4 +7,4 @@ default: # 默认连接
   type: "mysql"
   database: "tally"
   synchronize: true
-  entities: ["app/model/*.ts","app/model/*/*.ts"]
+  entities: ["app/entity/*.ts","app/entity/*/*.ts"]

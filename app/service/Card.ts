@@ -1,6 +1,6 @@
 import BaseService from '../core/BaseService';
 import { getRepository } from 'typeorm';
-import Card from '../model/Card';
+import Card from '../entity/Card';
 
 /**
  * work Service
