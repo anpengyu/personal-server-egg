@@ -1,17 +1,18 @@
-import { Entity, Column, ManyToOne } from "typeorm";
-import BaseModel from '../../core/BaseModel'
-import User from '../User';
+import { Entity, Column ,BaseEntity,PrimaryGeneratedColumn} from "typeorm";
+// import User from '../../entity/User'
 
 // 文章
-@Entity('article')
-export default class Article extends BaseModel {
-
+@Entity('articles')
+export default class Article extends BaseEntity {
+    @PrimaryGeneratedColumn()
+    id: number;
     @Column({ name: 'article_content' ,type:'text'})
     articleContent;//内容
     
     @Column({ name: 'article_title' })
     articleTitle: string;//标题
-
+    @Column({ name: 'article_title' })
+    userId: string;//标题
     @Column({ name: 'article_subtitle',default:''})
     articleSubtitle:string;//副标题
 
@@ -27,6 +28,6 @@ export default class Article extends BaseModel {
     @Column({ name: 'article_comment_count', default: 0 })
     articleCommentCount: number;//评论数
 
-    @ManyToOne(() => User, user => user.articles, { eager: true })
-    user: User;
+    // @ManyToOne(() => User, user => user.articles, { eager: true })
+    // user: User;
 }
