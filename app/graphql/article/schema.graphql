@@ -14,4 +14,5 @@ type Article {
   created_at: Date
   tags:[Tag!]
   articleSubTitle:String!
+  comment:[Comment!]
 }

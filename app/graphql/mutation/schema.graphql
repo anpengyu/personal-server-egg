@@ -5,6 +5,9 @@ type Mutation {
   #Article
   createArticle(userId:ID!,articleTitle:String!,articleSubTitle:String!,articleContent:String!):Article
 
+  #Comment
+  createComment(userId:ID!,articleId:String!,content:String!,replyToCommentId:String!,rootCommentId:String!):Comment
+
   # Item
   createItem (userID: ID!, content: String!, expire: Date,time:String!): Item
   updateItem (id: ID!, content: String, expire: Date, done: Boolean): Item

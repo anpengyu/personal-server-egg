@@ -2,14 +2,16 @@
 
 type Comment {
   id: ID!
-  userId:String!
+  userId:ID!
   articleId: String!#文章id
   content:String!#评论内容
   creator:User!#评论发布者
   replyTo: User!#回复的评论用户
   rootId:String!
   replyToCommentId:String!#回复的评论ID
-  isAuthor:Boolean!#是否为文章作者
+  rootCommentId:String!
   liks:Int!#点赞数
+  updated_at: Date
+  created_at: Date
   comment:[Comment!]
 }
