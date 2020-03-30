@@ -1,0 +1,15 @@
+
+
+type Comment {
+  id: ID!
+  userId:String!
+  articleId: String!#文章id
+  content:String!#评论内容
+  creator:User#评论发布者
+  rootId:String!
+  replyToCommentId:String!#回复的评论ID
+  replyTo: User#回复的评论用户
+  isAuthor:Boolean!#是否为文章作者
+  liks:Int!#点赞数
+  comment:[Comment!]
+}

@@ -4,4 +4,5 @@ type Query {
   tags: [String!]
   article(id:ID!):Article
   allArticles:[Article!]
+  comment(articleId:ID!):[Comment!]
 }

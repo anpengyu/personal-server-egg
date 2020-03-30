@@ -27,10 +27,10 @@ export default (appInfo: EggAppInfo) => {
     graphiql: true,
     // graphQL 路由前的拦截器
     onPreGraphQL: function* (ctx) {
-      console.log('onPreGraphQL...',ctx)
+      console.log('onPreGraphQL...', ctx)
     },
     // 开发工具 graphiQL 路由前的拦截器，建议用于做权限操作(如只提供开发者使用)
-    onPreGraphiQL: function* (ctx) { console.log('onPreGraphiQL...',ctx)},
+    onPreGraphiQL: function* (ctx) { console.log('onPreGraphiQL...', ctx) },
   }
   config.jwt = {
     enable: true,
