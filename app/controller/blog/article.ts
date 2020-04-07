@@ -30,8 +30,8 @@ export default class ArticleController extends BaseController {
     //获取自己的文章
     async loadOwnArticle() {
         // const { ctx } = this;
-        let data = await this.article.loadOwnArticle(this.params);
-        this.success({ data })
+        // let data = await this.article.loadOwnArticle(this.params);
+        // this.success({ data })
     }
 
     //添加文章

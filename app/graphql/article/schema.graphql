@@ -1,8 +1,8 @@
-
+# 架构，定义GraphQL API的轮廓和规范
 
 type Article {
   id: ID!
-  userId: String!
+  userId: ID!
   articleTitle:String!
   articleContent:String!
   articlePraiseCount:Int!

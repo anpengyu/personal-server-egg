@@ -1,7 +1,7 @@
-import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, OneToMany, BeforeInsert } from "typeorm";
+import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, BeforeInsert } from "typeorm";
 import bcrypt = require('bcryptjs');
 import { Exclude } from 'class-transformer';
-import Article from './blog/article';
+// import Article from './blog/article';
 
 @Entity('user')
 export default class User extends BaseEntity {
@@ -30,8 +30,8 @@ export default class User extends BaseEntity {
     headImg: string;
 
     // 文章
-    @OneToMany(() => Article, article => article.user)
-    articles: Article[]
+    // @OneToMany(() => Article, article => article.user)
+    // articles: Article[]
 
     @BeforeInsert()
     hashPassword() {

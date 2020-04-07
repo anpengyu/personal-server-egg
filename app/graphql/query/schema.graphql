@@ -5,4 +5,8 @@ type Query {
   article(id:ID!):Article
   allArticles:[Article!]
   comment(articleId:ID!):[Comment!]
+
+  # 测试用例
+  hello:String
+  example_user(id:String!):Example_User
 }
