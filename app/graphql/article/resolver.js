@@ -29,6 +29,17 @@ module.exports = {
         userId,articleTitle,articleSubTitle,articleContent
       }
       return ctx.connector.article.createArticle(data, userId,articleTitle,articleSubTitle,articleContent)
-    }
+    },
+
+    // 增加文章查看次数
+    addWatchCount(root,{articleId},ctx){
+      return ctx.connector.article.addWatchCount(articleId);
+    },
+
+    //点赞
+    addPraiseCount(root,{articleId},ctx){
+      return ctx.connector.article.addPraiseCount(articleId);
+    },
+
   }
 };

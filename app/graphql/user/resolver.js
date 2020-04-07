@@ -24,9 +24,15 @@ module.exports = {
     },
     replyTo(root, _, ctx) {
       if (root.replyToCommentId === 0) {
-        return { id: -1, username: '' ,sex:'',headImg:''};
+        return { id: -1, username: '', sex: '', headImg: '' };
       }
       return ctx.connector.user.fetchById(root.replyToCommentId);
     },
-  }
+  },
+  Mutation: {
+    //点赞
+    addUserLikes(root, { userId, articleId }, ctx) {
+      return ctx.connector.user.addUserLikes(userId,articleId);
+    },
+  },
 };

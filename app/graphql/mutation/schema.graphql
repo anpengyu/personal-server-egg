@@ -4,9 +4,18 @@ type Mutation {
 
   #Article
   createArticle(userId:ID!,articleTitle:String!,articleSubTitle:String!,articleContent:String!):Article
+  addWatchCount(articleId:ID!):Article #添加文章查看次数
+  addPraiseCount(articleId:ID!):Article #点赞
 
   #Comment
   createComment(userId:ID!,articleId:String!,content:String!,replyToCommentId:String!,rootCommentId:String!):Comment
+
+  #User
+  addHistory(userId:ID!,articleId:ID!):User #添加浏览记录
+  addUserLikes(userId:ID!,articleId:ID!):User #添加点赞
+  addCollect(userId:ID!,articleId:ID!):User #添加收藏
+  addComments(userId:ID!,articleId:ID!):User #添加评论
+  addAttention(userId:ID!,articleId:ID!):User #添加关注的作者
 
   # Item
   createItem (userID: ID!, content: String!, expire: Date,time:String!): Item

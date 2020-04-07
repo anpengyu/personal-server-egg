@@ -7,5 +7,10 @@ type User {
   items: [Item!]
   sex:String!
   tags:[Tag!]
-  headImg:String!
+  headImg:String
+  likes:String
+  collects:String
+  comments:String
+  historys:String
+  attention:String
 }
