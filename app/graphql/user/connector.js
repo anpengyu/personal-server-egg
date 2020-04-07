@@ -36,20 +36,20 @@ class UserConnector {
 
   //1:点赞列表 2:收藏列表 3:浏览记录 4:关注的作者 5:评论列表 6:文章列表
   async changeUserInfo(userId, id, type) {
-    const user = await this.loader.load(id);
+    const user = await this.loader.load(userId);
     let data = '';
     switch (type) {
-      case "1": data = user.likes;
+      case 1: data = user.likes;
         break;
-      case "2": data = user.collects;
+      case 2: data = user.collects;
         break;
-      case "3": data = user.historys;
+      case 3: data = user.historys;
         break;
-      case "4": data = user.attention;
+      case 4: data = user.attention;
         break;
-      case "5": data = user.comments;
+      case 5: data = user.comments;
         break;
-      case "6": data = user.articles;
+      case 6: data = user.articles;
         break;
     }
     let newData = [];
@@ -59,19 +59,20 @@ class UserConnector {
       newData = JSON.parse(data);
       newData.push(id);
     }
+    let uniqData = JSON.stringify(_.uniq(newData));
 
     switch (type) {
-      case "1": user.likes = JSON.stringify(newData);
+      case 1: user.likes = uniqData;
         break;
-      case "2": user.collects = JSON.stringify(newData);
+      case 2: user.collects = uniqData;
         break;
-      case "3": user.historys = JSON.stringify(newData);
+      case 3: user.historys = uniqData
         break;
-      case "4": user.attention = JSON.stringify(newData);
+      case 4: user.attention = uniqData;
         break;
-      case "5": user.comments = JSON.stringify(newData);
+      case 5: user.comments = uniqData;
         break;
-      case "6": user.articles = JSON.stringify(newData);
+      case 6: user.articles = uniqData;
         break;
     }
 
@@ -80,6 +81,7 @@ class UserConnector {
         id: userId
       },
     });
+    console.log('user', user)
     return user;
   }
 
