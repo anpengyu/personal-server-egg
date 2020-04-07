@@ -12,7 +12,7 @@ type Mutation {
 
   #User
   addHistory(userId:ID!,articleId:ID!):User #添加浏览记录
-  addUserLikes(userId:ID!,articleId:ID!):User #添加点赞
+  changeUserInfo(userId:ID!,articleId:ID!,type:String!):User #添加点赞 type 1:点赞列表 2:收藏列表 3:浏览记录 4:关注的作者 5:评论列表 6:文章列表
   addCollect(userId:ID!,articleId:ID!):User #添加收藏
   addComments(userId:ID!,articleId:ID!):User #添加评论
   addAttention(userId:ID!,articleId:ID!):User #添加关注的作者

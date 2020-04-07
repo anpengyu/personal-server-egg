@@ -30,9 +30,9 @@ module.exports = {
     },
   },
   Mutation: {
-    //点赞
-    addUserLikes(root, { userId, articleId }, ctx) {
-      return ctx.connector.user.addUserLikes(userId,articleId);
+    //点赞 1:点赞列表 2:收藏列表 3:浏览记录 4:关注的作者 5:评论列表 6:文章列表
+    changeUserInfo(root, { userId, articleId,type }, ctx) {
+      return ctx.connector.user.changeUserInfo(userId,articleId,type);
     },
   },
 };
