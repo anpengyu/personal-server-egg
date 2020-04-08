@@ -29,9 +29,7 @@ class UserConnector {
 
   fetchById(id) {
     let d = this.loader.load(id);
-    d.then(res => {
-      console.log('res..', res)
-    })
+    
 
     return d;
   }
@@ -77,14 +75,40 @@ class UserConnector {
     return { articlePageView: article.articlePageView };
   }
 
-  // 点赞
-  async addPraiseCount(id, type) {
+  // 点赞 1:点赞列表 2:收藏列表 3:浏览记录 4:关注的作者 5:评论列表 6:文章列表  type:1添加 2:减
+  async addPraiseCount(id, flag, type) {
+
     const article = await this.loader.load(id);
     if (type == 1) {//1：点赞  2：取消点赞
-      article.articlePraiseCount += 1
+      switch (flag) {
+        case 1: article.articlePraiseCount += 1
+          break;
+        case 2: article.articleDislikeCount += 1
+          break;
+        case 3:
+          break;
+        case 4:
+          break;
+        case 5:
+          break;
+        case 6:
+          break;
+      }
     } else {
-      if (Number(article.articlePraiseCount) != 0) {
-        article.articlePraiseCount -= 1
+      switch (flag) {
+        case 1: 
+        Number(article.articlePraiseCount) >= 0 ? article.articlePraiseCount -= 1:''
+          break;
+        case 2: Number(article.articleDislikeCount) >= 0 ? article.articleDislikeCount -= 1:''
+          break;
+        case 3:
+          break;
+        case 4:
+          break;
+        case 5:
+          break;
+        case 6:
+          break;
       }
     }
 
@@ -93,7 +117,8 @@ class UserConnector {
         id: id
       },
     })
-    return { articlePraiseCount: article.articlePraiseCount };
+    console.log('article', article)
+    return { id:article.id };
   }
 
 }

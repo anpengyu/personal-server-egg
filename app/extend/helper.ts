@@ -79,12 +79,12 @@ const notLogin = (ctx: Context) => {
 };
 
 const tokenExpired = (ctx: Context) => {
-  ctx.body = errorHelper(401, 'token过期，请重新登陆');
-  ctx.status = 401;
+  ctx.body = errorHelper(200, 'token过期，请重新登陆');
+  ctx.status = 200;
   return false;
 }
 
-const currentDate = () => {
+export const currentDate = () => {
   var now = new Date();
   var year = now.getFullYear(); //得到年份
   var month = now.getMonth();//得到月份

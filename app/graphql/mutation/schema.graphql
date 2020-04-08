@@ -5,17 +5,15 @@ type Mutation {
   #Article
   createArticle(userId:ID!,articleTitle:String!,articleSubTitle:String!,articleContent:String!):Article
   addWatchCount(articleId:ID!):Article #添加文章查看次数
-  addPraiseCount(articleId:ID!,type:Int!):Article #点赞
+  #flag:1:点赞列表 2:收藏列表 3:浏览记录 4:关注的作者 5:评论列表 6:文章列表  type:1添加 2:减
+  addPraiseCount(articleId:ID!,flag:Int!,type:Int!):Article #点赞 
 
   #Comment
   createComment(userId:ID!,articleId:String!,content:String!,replyToCommentId:String!,rootCommentId:String!):Comment
 
   #User
-  addHistory(userId:ID!,articleId:ID!):User #添加浏览记录
   changeUserInfo(userId:ID!,id:ID!,type:Int!):User #添加点赞 type 1:点赞列表 2:收藏列表 3:浏览记录 4:关注的作者 5:评论列表 6:文章列表
-  addCollect(userId:ID!,articleId:ID!):User #添加收藏
-  addComments(userId:ID!,articleId:ID!):User #添加评论
-  addAttention(userId:ID!,articleId:ID!):User #添加关注的作者
+  register(username:String!,password:String!,repassword:String!,phone:String!):User #注册
 
   # Item
   createItem (userID: ID!, content: String!, expire: Date,time:String!): Item

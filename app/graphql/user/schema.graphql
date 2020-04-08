@@ -13,4 +13,5 @@ type User {
   comments:String
   historys:String
   attention:String
+  token:String
 }

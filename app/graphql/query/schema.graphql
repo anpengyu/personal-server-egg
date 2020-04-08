@@ -1,10 +1,14 @@
 
 type Query {
+  
   user(id: ID!): User
   tags: [String!]
   article(id:ID!):Article
   allArticles:[Article!]
   comment(articleId:ID!):[Comment!]
+
+  #登录
+  login(username:String!,password:String!):User 
 
   # 测试用例
   hello:String

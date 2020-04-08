@@ -1,5 +1,10 @@
-'use strict';
+// 'use strict';
+// import helper from '../../extend/helper';
+const helper = require('../../extend/helper');
+const { KEYS } = require('../../extend/Constant');
 const _ = require('lodash');
+const jwt = require('jsonwebtoken')
+
 const DataLoader = require('dataloader');
 
 class UserConnector {
@@ -10,7 +15,7 @@ class UserConnector {
   }
 
   fetch(ids) {
-    const users = this.ctx.app.model.User.findAll({
+    const users = this.proxy.findAll({
       where: {
         id: {
           $in: ids,
@@ -94,13 +99,34 @@ class UserConnector {
         id: userId
       },
     });
-    console.log('user', user)
     return user;
   }
 
+  async login(params) {
+    const user = await this.proxy.findOne({
+      where: {
+        username: params.username,
+        password: params.password
+      }
+    });
+
+    if (_.isEmpty(user)) {
+      return null;
+    } else {
+      let loginTime = helper.currentDate();
+      // let loginTime = this.currentDate();
+      let token = jwt.sign({
+        id: user.id,
+        username: user.username,
+        loginTime
+      }, KEYS)
+      // console.log('ctx',this.ctx.app.redis)
+      this.ctx.app.redis.set(token, user.id);
+      this.ctx.app.redis.set(user.id + 'loginTime', loginTime)
+      return {token}
+    }
+  }
 }
-
-
 
 module.exports = UserConnector;
 

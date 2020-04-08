@@ -1,7 +1,7 @@
 default: # 默认连接
   host: "121.36.9.185"
   port: 10086
-  logging: true
+  logging: false
   username: "root"
   password: "anpengyu1"
   type: "mysql"

@@ -9,13 +9,14 @@ export default (appInfo: EggAppInfo) => {
       port: '10086',
       username: 'root',
       password: 'anpengyu1',
+      logging:false
     },
   } as PowerPartial<EggAppConfig>;
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '202003031516_900321';
 
-  config.middleware = ['graphql'];
+  config.middleware = ['authentication','graphql'];
 
   config.graphql = {
     router: '/graphql',
@@ -32,6 +33,7 @@ export default (appInfo: EggAppInfo) => {
     // 开发工具 graphiQL 路由前的拦截器，建议用于做权限操作(如只提供开发者使用)
     onPreGraphiQL: function* (ctx) { console.log('onPreGraphiQL...', ctx) },
   }
+ 
   config.jwt = {
     enable: true,
     // ignore: [ '/api/v1/test/', '/public/' ], // 哪些请求不需要认证

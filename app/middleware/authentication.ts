@@ -1,25 +1,27 @@
 import { KEYS } from '../extend/Constant';
-import User from '../entity/User';
+// import User from '../entity/User';
 const _ = require('lodash');
 const jwt = require('jsonwebtoken')
 
-export default function Authentication(app) {
+export default function Authentication() {
     return async (ctx, next) => {
-        const token = ctx.request.header.authorization;
+        let token = ctx.request.header.authorization;
+        if(_.eq(token,'login')){
+            await next();
+            return;
+        }
         return jwt.verify(token, KEYS, async (err, decoded) => {
-            let loginTime = await app.redis.get(decoded && decoded.id + 'loginTime');
+            let loginTime = await ctx.app.redis.get(decoded && decoded.id + 'loginTime');
             if (err || _.isEmpty(loginTime)) {
                 ctx.helper.notLogin(ctx);
-                return false;
+                return;
             } else if (!_.eq(loginTime, decoded.loginTime)) {
                 ctx.helper.tokenExpired(ctx);
-                return false;
+                return;
             } else {
-                const user = await User.findOne(decoded.id);
-                ctx.req.currentUser = user;
-                await next(app);
-                return true;
+                await next();
+                return;
             }
         })
-    };
+    }
 }

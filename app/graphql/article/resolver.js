@@ -4,7 +4,6 @@ module.exports = {
   Query: {
     // 获取所有文章
     allArticles(root, _, ctx) {
-      console.log('dddddddddddd')
       return ctx.connector.article.loadAllArticles();
     },
     //根据文章id获取文章详情
@@ -37,8 +36,8 @@ module.exports = {
     },
 
     //点赞
-    addPraiseCount(root,{articleId,type},ctx){
-      return ctx.connector.article.addPraiseCount(articleId,type);
+    addPraiseCount(root,{articleId,flag,type},ctx){
+      return ctx.connector.article.addPraiseCount(articleId,flag,type);
     },
 
   }

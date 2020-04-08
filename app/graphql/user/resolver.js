@@ -9,6 +9,9 @@ module.exports = {
     tags(root, params, ctx) {
       return ctx.connector.item.fetchRecommandation();
     },
+    login(root, params, ctx){
+      return ctx.connector.user.login(params);
+    }
   },
   Article: {
     //根据文章获取所属用户
