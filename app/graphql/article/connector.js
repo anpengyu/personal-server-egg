@@ -78,9 +78,16 @@ class UserConnector {
   }
 
   // 点赞
-  async addPraiseCount(id) {
+  async addPraiseCount(id, type) {
     const article = await this.loader.load(id);
-    article.articlePraiseCount += 1
+    if (type == 1) {//1：点赞  2：取消点赞
+      article.articlePraiseCount += 1
+    } else {
+      if (Number(article.articlePraiseCount) != 0) {
+        article.articlePraiseCount -= 1
+      }
+    }
+
     let data = await this.ctx.app.model.Article.update(article, {
       where: {
         id: id

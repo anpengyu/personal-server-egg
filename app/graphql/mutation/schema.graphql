@@ -5,7 +5,7 @@ type Mutation {
   #Article
   createArticle(userId:ID!,articleTitle:String!,articleSubTitle:String!,articleContent:String!):Article
   addWatchCount(articleId:ID!):Article #添加文章查看次数
-  addPraiseCount(articleId:ID!):Article #点赞
+  addPraiseCount(articleId:ID!,type:Int!):Article #点赞
 
   #Comment
   createComment(userId:ID!,articleId:String!,content:String!,replyToCommentId:String!,rootCommentId:String!):Comment
@@ -26,3 +26,65 @@ type Mutation {
   attachTag (itemID: ID!, tag: String!): Tag 
   removeTag (id: ID!): Tag 
 }
+
+# {
+#   article(id:1){
+#     id
+#     user{
+#       id
+#     }
+#     comment{
+#       userId
+#       replyTo{
+#         id
+#       }
+#       creator{
+#         id
+#       }
+#     }
+#   }
+# }
+# mutation{
+#   addPraiseCount(articleId:1,type:"1") {
+#     articlePraiseCount
+#   }
+# }
+# mutation{
+#   changeUserInfo(userId:2,id:1,type:2){
+#     id
+#   }
+# }
+
+# {
+#   user(id:1){
+#     id
+#   }
+# }
+
+# {
+#   user(id:1){
+#     id
+#     username
+#     articles{
+#       id
+#       comment {
+#         id
+#       }
+#     }
+#   }
+# }
+
+# {
+#   allArticles{
+#     id
+#     articleContent
+#     user{
+#       id
+#       username
+#       articles{
+#         id
+#         articleContent
+#       }
+#     }
+#   }
+# }

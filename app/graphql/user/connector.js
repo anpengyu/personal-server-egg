@@ -56,23 +56,36 @@ class UserConnector {
     if (_.isEmpty(data)) {
       newData.push(id);
     } else {
-      newData = JSON.parse(data);
-      newData.push(id);
+      if (_.includes(data, id)) {
+        if (!_.eq(type, 3)) {
+          newData = _.filter(JSON.parse(data), (v) => id != v)
+          if (_.isEmpty(newData)) {
+            newData = []
+          }
+        } else {
+          newData = JSON.parse(data);
+          newData.push(id);
+        }
+      } else {
+        newData = JSON.parse(data);
+        newData.push(id);
+      }
     }
-    let uniqData = JSON.stringify(_.uniq(newData));
 
+    // let strData = JSON.stringify(_.uniq(newData));
+    let strData = JSON.stringify(newData);
     switch (type) {
-      case 1: user.likes = uniqData;
+      case 1: user.likes = strData;
         break;
-      case 2: user.collects = uniqData;
+      case 2: user.collects = strData;
         break;
-      case 3: user.historys = uniqData
+      case 3: user.historys = strData
         break;
-      case 4: user.attention = uniqData;
+      case 4: user.attention = strData;
         break;
-      case 5: user.comments = uniqData;
+      case 5: user.comments = strData;
         break;
-      case 6: user.articles = uniqData;
+      case 6: user.articles = strData;
         break;
     }
 

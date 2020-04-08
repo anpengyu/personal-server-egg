@@ -37,8 +37,8 @@ module.exports = {
     },
 
     //点赞
-    addPraiseCount(root,{articleId},ctx){
-      return ctx.connector.article.addPraiseCount(articleId);
+    addPraiseCount(root,{articleId,type},ctx){
+      return ctx.connector.article.addPraiseCount(articleId,type);
     },
 
   }
