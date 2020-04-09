@@ -2,7 +2,7 @@
 
 const DataLoader = require('dataloader');
 const _ = require('lodash');
-class UserConnector {
+class UserConnector{
   constructor(ctx) {
     this.ctx = ctx;
     this.loader = new DataLoader(this.fetch.bind(this));

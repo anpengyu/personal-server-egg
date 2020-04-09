@@ -11,6 +11,9 @@ module.exports = {
     },
     login(root, params, ctx){
       return ctx.connector.user.login(params);
+    },
+    logout(root, params, ctx){
+      return ctx.connector.user.logout();
     }
   },
   Article: {

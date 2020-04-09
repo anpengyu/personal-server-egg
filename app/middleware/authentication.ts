@@ -10,7 +10,9 @@ export default function Authentication() {
             await next();
             return;
         }
+        console.log('eewewe')
         return jwt.verify(token, KEYS, async (err, decoded) => {
+            console.log('11111')
             let loginTime = await ctx.app.redis.get(decoded && decoded.id + 'loginTime');
             if (err || _.isEmpty(loginTime)) {
                 ctx.helper.notLogin(ctx);

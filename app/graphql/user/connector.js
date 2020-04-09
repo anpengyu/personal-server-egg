@@ -4,6 +4,7 @@ const helper = require('../../extend/helper');
 const { KEYS } = require('../../extend/Constant');
 const _ = require('lodash');
 const jwt = require('jsonwebtoken')
+// const BaseConnector = require('../BaseConnector');
 
 const DataLoader = require('dataloader');
 
@@ -12,6 +13,7 @@ class UserConnector {
     this.ctx = ctx;
     this.loader = new DataLoader(this.fetch.bind(this));
     this.proxy = ctx.app.model.User;
+    this.token = ctx.request.header.authorization;
   }
 
   fetch(ids) {
@@ -34,7 +36,7 @@ class UserConnector {
       where: {
         id
       },
-    }).then(us => us.toJSON());
+    }).then(us => !_.isEmpty(us) && us.toJSON());
 
     return user;
   }
@@ -123,8 +125,15 @@ class UserConnector {
       // console.log('ctx',this.ctx.app.redis)
       this.ctx.app.redis.set(token, user.id);
       this.ctx.app.redis.set(user.id + 'loginTime', loginTime)
-      return {token}
+      return { token }
     }
+  }
+
+  async logout() {
+    const userId = await this.ctx.app.redis.get(this.token)
+    this.ctx.app.redis.set(this.token, '');
+    this.ctx.app.redis.set(userId + 'loginTime', '')
+    return { id: userId }
   }
 }
 

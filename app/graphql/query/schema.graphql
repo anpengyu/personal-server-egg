@@ -9,7 +9,8 @@ type Query {
 
   #登录
   login(username:String!,password:String!):User 
-
+  logout:User
+  
   # 测试用例
   hello:String
   example_user(id:String!):Example_User
