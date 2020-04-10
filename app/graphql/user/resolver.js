@@ -2,9 +2,8 @@
 
 module.exports = {
   Query: {
-    user(root, { id }, ctx) {
-      let d = ctx.connector.user.fetchById(id);
-      return d;
+    user(root,params, ctx) {
+      return ctx.connector.user.fetchById();
     },
     tags(root, params, ctx) {
       return ctx.connector.item.fetchRecommandation();

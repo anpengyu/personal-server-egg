@@ -31,10 +31,11 @@ class UserConnector {
     return this.loader.loadMany(ids);
   }
 
-  async fetchById(id) {
+  async fetchById() {
+    const userId = await this.ctx.app.redis.get(this.token)
     const user = this.ctx.app.model.User.find({
       where: {
-        id
+        id:userId
       },
     }).then(us => !_.isEmpty(us) && us.toJSON());
 
@@ -105,6 +106,7 @@ class UserConnector {
   }
 
   async login(params) {
+    console.log('params',params)
     const user = await this.proxy.findOne({
       where: {
         username: params.username,

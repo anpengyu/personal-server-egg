@@ -1,7 +1,7 @@
 
 type Query {
   
-  user(id: ID!): User
+  user: User
   tags: [String!]
   article(id:ID!):Article
   allArticles:[Article!]
