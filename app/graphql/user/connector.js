@@ -31,8 +31,9 @@ class UserConnector {
     return this.loader.loadMany(ids);
   }
 
-  async fetchById() {
-    const userId = await this.ctx.app.redis.get(this.token)
+  async fetchById(userId) {
+    // const userId = await this.ctx.app.redis.get(this.token)
+    // console.log('userId',userId)
     const user = this.ctx.app.model.User.find({
       where: {
         id:userId
