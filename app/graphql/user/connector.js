@@ -31,12 +31,10 @@ class UserConnector {
     return this.loader.loadMany(ids);
   }
 
-  async fetchById(userId) {
-    // const userId = await this.ctx.app.redis.get(this.token)
-    // console.log('userId',userId)
+  async fetchById(id) {
     const user = this.ctx.app.model.User.find({
       where: {
-        id:userId
+        id
       },
     }).then(us => !_.isEmpty(us) && us.toJSON());
 
@@ -128,7 +126,7 @@ class UserConnector {
       // console.log('ctx',this.ctx.app.redis)
       this.ctx.app.redis.set(token, user.id);
       this.ctx.app.redis.set(user.id + 'loginTime', loginTime)
-      return { token }
+      return { id:user.id,token }
     }
   }
 

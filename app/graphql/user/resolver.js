@@ -2,11 +2,9 @@
 
 module.exports = {
   Query: {
-   async user(root,params, ctx) {
-    let token = ctx.request.header.authorization;
-      const userId = await ctx.app.redis.get(token)
-      console.log('userId',userId)
-      return ctx.connector.user.fetchById(userId);
+    user(root, { id }, ctx) {
+      let d = ctx.connector.user.fetchById(id);
+      return d;
     },
     tags(root, params, ctx) {
       return ctx.connector.item.fetchRecommandation();
