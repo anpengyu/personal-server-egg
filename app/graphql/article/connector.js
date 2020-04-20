@@ -57,6 +57,9 @@ class UserConnector{
 
   // 添加文章
   async createArticle(data) {
+    if(data.label && !_.isEmpty(data.label)){
+      data.label = JSON.stringify(data.label)
+    }
     const item = await this.proxy.create(_.pickBy({
       ...data
     }));

@@ -9,6 +9,8 @@ module.exports = (app) => {
     articleDislikeCount:{type:INTEGER,field:'article_dislike_count'},
     articlePageView:{type:INTEGER,field:'article_page_view'},
     articleCommentCount:{type:INTEGER,field:'article_comment_count'},
+    course:{type:STRING()},
+    label:{type:STRING()}
   });
   return Article;
 };

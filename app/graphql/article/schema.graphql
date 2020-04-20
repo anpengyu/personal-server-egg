@@ -15,4 +15,6 @@ type Article {
   tags:[Tag!]
   articleSubTitle:String!
   comment:[Comment!]
+  label:String
+  course:[String]
 }

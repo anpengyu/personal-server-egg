@@ -21,23 +21,21 @@ module.exports = {
     },
   },
 
-  Mutation:{
+  Mutation: {
     // 添加文章
-    createArticle(root,{userId,articleTitle,articleSubTitle,articleContent},ctx){
-      let data = {
-        userId,articleTitle,articleSubTitle,articleContent
-      }
-      return ctx.connector.article.createArticle(data, userId,articleTitle,articleSubTitle,articleContent)
+    createArticle(root, params, ctx) {
+      console.log('params',params)
+      return ctx.connector.article.createArticle(params)
     },
 
     // 增加文章查看次数
-    addWatchCount(root,{articleId},ctx){
+    addWatchCount(root, { articleId }, ctx) {
       return ctx.connector.article.addWatchCount(articleId);
     },
 
     //点赞
-    addPraiseCount(root,{articleId,flag,type},ctx){
-      return ctx.connector.article.addPraiseCount(articleId,flag,type);
+    addPraiseCount(root, { articleId, flag, type }, ctx) {
+      return ctx.connector.article.addPraiseCount(articleId, flag, type);
     },
 
   }
