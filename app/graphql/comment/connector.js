@@ -54,7 +54,6 @@ class CommentConnector {
   }
 
   loadAllComment1(articleId,id) {
-    console.log('id', id)
     const comment = this.ctx.app.model.Comment.findAll({
       where: {
         article_id:articleId,

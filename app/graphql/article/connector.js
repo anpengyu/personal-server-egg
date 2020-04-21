@@ -30,7 +30,7 @@ class UserConnector {
 
   fetchById(id) {
     let d = this.loader.load(id);
-    
+
 
     return d;
   }
@@ -56,7 +56,7 @@ class UserConnector {
     return articles;
   }
 
-  async addClassify(data){
+  async addClassify(data,id) {
     if (!_.isEmpty(data.course)) {
       const classifyForUser = await this.classifyProxy.findAll({
         where: { userId: data.userId },
@@ -66,9 +66,9 @@ class UserConnector {
       if (classifyForUser) {
         let course = _.filter(classifyForUser, function (o) { return _.eq(o.name, data.course); });
         if (course && !_.isEmpty(course)) {
-          this.pushClassify(data,course)
+          this.pushClassify(data, course,id)
         } else {
-          this.addNewClassify(data)
+          this.addNewClassify(data,id)
         }
       }
       // console.log('classify', classify)
@@ -76,8 +76,8 @@ class UserConnector {
 
   }
 
-  async pushClassify(data,course) {
-    let detailData = { name: data.articleTitle };
+  async pushClassify(data, course,id) {
+    let detailData = { name: data.articleTitle,id:id };
     course = course[0];
     let detail = JSON.parse(course.detail);
     detail.push(detailData)
@@ -87,8 +87,8 @@ class UserConnector {
     }), { where: { userId: data.userId, name: course.name } });
   }
 
-  async addNewClassify(data) {
-    let newDetail = [{ name: data.articleTitle }];
+  async addNewClassify(data,id) {
+    let newDetail = [{ id:id,name: data.articleTitle}];
     let classifyData = {
       userId: data.userId,
       name: data.course,
@@ -105,12 +105,15 @@ class UserConnector {
       data.label = JSON.stringify(data.label)
     }
     //添加分类
-    this.addClassify(data)
+   
     const item = await this.proxy.create(_.pickBy({
       ...data
-    }));
+    })).then(us => !_.isEmpty(us) && us.toJSON());
+    console.log('....................', item)
 
-    return item.toJSON();
+    this.addClassify(data,item.id)
+
+    return item;
   }
 
   // 添加文章查看次数
@@ -166,7 +169,6 @@ class UserConnector {
         id: id
       },
     })
-    console.log('article', article)
     return { id: article.id };
   }
 

@@ -29,8 +29,6 @@ module.exports = {
   },
   Article: {
     comment(root, { articleId }, ctx) {
-      console.log('root',root)
-      console.log('articleId',articleId)
       return ctx.connector.comment.loadAllComment(root.id,"0");
     },
   }

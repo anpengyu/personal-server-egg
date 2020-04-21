@@ -105,7 +105,6 @@ class UserConnector {
   }
 
   async login(params) {
-    console.log('params',params)
     const user = await this.proxy.findOne({
       where: {
         username: params.username,
