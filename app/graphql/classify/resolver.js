@@ -5,8 +5,13 @@ module.exports = {
         loadClassify(root, _, context) {
             return context.connector.classify.loadClassify();
         },
-        loadClassifyForUser(root, id, context) {
-            return context.connector.classify.loadClassifyForUser(id);
+        loadClassifyForUser(root, params, context) {
+            return context.connector.classify.loadClassifyForUser(params.userId);
+        }
+    },
+    User: {
+        classify(root, id, context) {
+            return context.connector.classify.loadClassifyForUser(root.id);
         }
     },
     Mutation: {

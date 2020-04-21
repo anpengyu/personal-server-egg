@@ -29,8 +29,8 @@ class UserConnector {
   }
 
   fetchById(id) {
-    let d = this.proxy.findAll();
-
+    let d = this.loader.load(id);
+    
 
     return d;
   }
@@ -56,13 +56,7 @@ class UserConnector {
     return articles;
   }
 
-  // 添加文章
-  async createArticle(data) {
-    if (data.label && !_.isEmpty(data.label)) {
-      data.label = JSON.stringify(data.label)
-    }
-    console.log('data', data)
-    //添加分类
+  async addClassify(data){
     if (!_.isEmpty(data.course)) {
       const classifyForUser = await this.classifyProxy.findAll({
         where: { userId: data.userId },
@@ -72,33 +66,46 @@ class UserConnector {
       if (classifyForUser) {
         let course = _.filter(classifyForUser, function (o) { return _.eq(o.name, data.course); });
         if (course && !_.isEmpty(course)) {
-          console.log('<<<<<<<<<<<<<<<<',course)
-          let detailData = { name: data.articleTitle };
-          course = course[0];
-          let detail = JSON.parse(course.detail);
-          detail.push(detailData)
-          course.detail = JSON.stringify(detail)
-          const classify = await this.classifyProxy.update(_.pickBy({
-            ...course
-          }), { where: { userId: data.userId, name: course.name } });
-          console.log('ddddddd',classify)
+          this.pushClassify(data,course)
         } else {
-          console.log('=====================')
-          let newDetail = [{ name: data.articleTitle }];
-          let classifyData = {
-            userId: data.userId,
-            name: data.course,
-            detail: JSON.stringify(newDetail)
-          }
-          const classify = await this.classifyProxy.create(_.pickBy({
-            ...classifyData
-          }));
+          this.addNewClassify(data)
         }
-        console.log('dddddddddd', classifyForUser)
       }
       // console.log('classify', classify)
     }
 
+  }
+
+  async pushClassify(data,course) {
+    let detailData = { name: data.articleTitle };
+    course = course[0];
+    let detail = JSON.parse(course.detail);
+    detail.push(detailData)
+    course.detail = JSON.stringify(detail)
+    await this.classifyProxy.update(_.pickBy({
+      ...course
+    }), { where: { userId: data.userId, name: course.name } });
+  }
+
+  async addNewClassify(data) {
+    let newDetail = [{ name: data.articleTitle }];
+    let classifyData = {
+      userId: data.userId,
+      name: data.course,
+      detail: JSON.stringify(newDetail)
+    }
+    await this.classifyProxy.create(_.pickBy({
+      ...classifyData
+    }));
+  }
+
+  // 添加文章
+  async createArticle(data) {
+    if (data.label && !_.isEmpty(data.label)) {
+      data.label = JSON.stringify(data.label)
+    }
+    //添加分类
+    this.addClassify(data)
     const item = await this.proxy.create(_.pickBy({
       ...data
     }));

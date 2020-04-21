@@ -8,6 +8,7 @@ module.exports = {
     },
     //根据文章id获取文章详情
     article(root, { id }, ctx) {
+      console.log('id',id)
       return ctx.connector.article.fetchById(id);
     },
     tags(root, params, ctx) {

@@ -4,6 +4,7 @@ type User {
   id: ID!
   username: String!
   articles:[Article!]
+  classify:[Classify]
   items: [Item!]
   sex:String!
   tags:[Tag!]

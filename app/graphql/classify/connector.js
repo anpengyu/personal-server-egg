@@ -33,7 +33,7 @@ class ClassifyConnector {
     async loadClassifyForUser(id) {
         const classify = await this.proxy.findAll({
             where: {
-                userId: id.userId,
+                userId: id,
             },
         });
         return classify;

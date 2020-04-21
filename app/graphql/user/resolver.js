@@ -9,10 +9,10 @@ module.exports = {
     tags(root, params, ctx) {
       return ctx.connector.item.fetchRecommandation();
     },
-    login(root, params, ctx){
+    login(root, params, ctx) {
       return ctx.connector.user.login(params);
     },
-    logout(root, params, ctx){
+    logout(root, params, ctx) {
       return ctx.connector.user.logout();
     }
   },
@@ -35,10 +35,15 @@ module.exports = {
       return ctx.connector.user.fetchById(root.replyToCommentId);
     },
   },
+  // Classify: {
+  //   loadClassifyForUser(root, id, context) {
+  //     return context.connector.classify.loadClassifyForUser(root.userId);
+  //   }
+  // },
   Mutation: {
     //点赞 1:点赞列表 2:收藏列表 3:浏览记录 4:关注的作者 5:评论列表 6:文章列表
-    changeUserInfo(root, { userId, id,type }, ctx) {
-      return ctx.connector.user.changeUserInfo(userId,id,type);
+    changeUserInfo(root, { userId, id, type }, ctx) {
+      return ctx.connector.user.changeUserInfo(userId, id, type);
     },
   },
 };
