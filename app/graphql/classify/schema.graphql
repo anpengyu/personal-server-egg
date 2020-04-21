@@ -1,0 +1,9 @@
+# 架构，定义GraphQL API的轮廓和规范
+
+type Classify {
+  id: ID!
+  userId: ID!
+  name:String!
+  detail:String
+  detailCount:Int
+}

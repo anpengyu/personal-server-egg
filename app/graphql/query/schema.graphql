@@ -7,6 +7,10 @@ type Query {
   allArticles:[Article!]
   comment(articleId:ID!):[Comment!]
 
+  # 获取文章分类
+  loadClassify:[Classify]
+  loadClassifyForUser(userId:ID!):[Classify]
+
   #登录
   login(username:String!,password:String!):User 
   logout:User

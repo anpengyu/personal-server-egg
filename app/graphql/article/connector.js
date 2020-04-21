@@ -2,11 +2,12 @@
 
 const DataLoader = require('dataloader');
 const _ = require('lodash');
-class UserConnector{
+class UserConnector {
   constructor(ctx) {
     this.ctx = ctx;
     this.loader = new DataLoader(this.fetch.bind(this));
     this.proxy = ctx.app.model.Article;
+    this.classifyProxy = ctx.app.model.Classify;
   }
 
   fetch(ids) {
@@ -28,8 +29,8 @@ class UserConnector{
   }
 
   fetchById(id) {
-    let d = this.loader.load(id);
-    
+    let d = this.proxy.findAll();
+
 
     return d;
   }
@@ -57,13 +58,15 @@ class UserConnector{
 
   // 添加文章
   async createArticle(data) {
-    if(data.label && !_.isEmpty(data.label)){
+    if (data.label && !_.isEmpty(data.label)) {
       data.label = JSON.stringify(data.label)
     }
-    console.log('data',data)
+    console.log('data', data)
+    // const classify = await this.proxy.create({ ...params });
     const item = await this.proxy.create(_.pickBy({
       ...data
     }));
+
     return item.toJSON();
   }
 
@@ -100,10 +103,9 @@ class UserConnector{
       }
     } else {
       switch (flag) {
-        case 1: 
-        Number(article.articlePraiseCount) >= 0 ? article.articlePraiseCount -= 1:''
+        case 1: Number(article.articlePraiseCount) >= 0 ? article.articlePraiseCount -= 1 : ''
           break;
-        case 2: Number(article.articleDislikeCount) >= 0 ? article.articleDislikeCount -= 1:''
+        case 2: Number(article.articleDislikeCount) >= 0 ? article.articleDislikeCount -= 1 : ''
           break;
         case 3:
           break;
@@ -122,7 +124,7 @@ class UserConnector{
       },
     })
     console.log('article', article)
-    return { id:article.id };
+    return { id: article.id };
   }
 
 }
