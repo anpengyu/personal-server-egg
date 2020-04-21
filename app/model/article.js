@@ -1,5 +1,5 @@
 module.exports = (app) => {
-  const { STRING ,TEXT,INTEGER} = app.Sequelize;
+  const { STRING ,TEXT,INTEGER,BOOLEAN} = app.Sequelize;
   const Article = app.model.define('article',{
     userId:STRING(),
     articleTitle:{type:STRING(),field:'article_title'},
@@ -10,7 +10,10 @@ module.exports = (app) => {
     articlePageView:{type:INTEGER,field:'article_page_view'},
     articleCommentCount:{type:INTEGER,field:'article_comment_count'},
     course:{type:STRING()},
-    label:{type:STRING()}
+    label:{type:STRING()},
+    original:BOOLEAN,
+    originalUrl:STRING(),
+    privacy:BOOLEAN
   });
   return Article;
 };

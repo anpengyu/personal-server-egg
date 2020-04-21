@@ -60,6 +60,7 @@ class UserConnector{
     if(data.label && !_.isEmpty(data.label)){
       data.label = JSON.stringify(data.label)
     }
+    console.log('data',data)
     const item = await this.proxy.create(_.pickBy({
       ...data
     }));

@@ -1,5 +1,5 @@
 module.exports = (app) => {
-  const { STRING ,TEXT} = app.Sequelize;
+  const { STRING ,TEXT,INTEGER} = app.Sequelize;
 
   const User = app.model.define('user', {
     username: STRING(30),

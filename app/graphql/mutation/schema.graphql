@@ -2,8 +2,10 @@
 
 type Mutation {
 
-  #Article
-  createArticle(userId:ID!,articleTitle:String!,articleSubTitle:String!,articleContent:String!,label:[String],course:String):Article
+  #Article privacy:1私密 course：文章系列（分类） label：标签 original:是否原创，originalUrl:原创链接
+  createArticle(userId:ID!,articleTitle:String!,articleSubTitle:String!,articleContent:String!,
+  label:[String],course:String,privacy:Boolean,original:Boolean,originalUrl:String):Article
+
   addWatchCount(articleId:ID!):Article #添加文章查看次数
   #flag:1:点赞列表 2:收藏列表 3:浏览记录 4:关注的作者 5:评论列表 6:文章列表  type:1添加 2:减
   addPraiseCount(articleId:ID!,flag:Int!,type:Int!):Article #点赞 

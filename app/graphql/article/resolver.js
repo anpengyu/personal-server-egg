@@ -24,7 +24,7 @@ module.exports = {
   Mutation: {
     // 添加文章
     createArticle(root, params, ctx) {
-      console.log('params',params)
+     
       return ctx.connector.article.createArticle(params)
     },
 
