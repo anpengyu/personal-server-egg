@@ -62,7 +62,43 @@ class UserConnector {
       data.label = JSON.stringify(data.label)
     }
     console.log('data', data)
-    // const classify = await this.proxy.create({ ...params });
+    //添加分类
+    if (!_.isEmpty(data.course)) {
+      const classifyForUser = await this.classifyProxy.findAll({
+        where: { userId: data.userId },
+      }).then(us =>
+        us.map(u => u.toJSON())
+      );
+      if (classifyForUser) {
+        let course = _.filter(classifyForUser, function (o) { return _.eq(o.name, data.course); });
+        if (course && !_.isEmpty(course)) {
+          console.log('<<<<<<<<<<<<<<<<',course)
+          let detailData = { name: data.articleTitle };
+          course = course[0];
+          let detail = JSON.parse(course.detail);
+          detail.push(detailData)
+          course.detail = JSON.stringify(detail)
+          const classify = await this.classifyProxy.update(_.pickBy({
+            ...course
+          }), { where: { userId: data.userId, name: course.name } });
+          console.log('ddddddd',classify)
+        } else {
+          console.log('=====================')
+          let newDetail = [{ name: data.articleTitle }];
+          let classifyData = {
+            userId: data.userId,
+            name: data.course,
+            detail: JSON.stringify(newDetail)
+          }
+          const classify = await this.classifyProxy.create(_.pickBy({
+            ...classifyData
+          }));
+        }
+        console.log('dddddddddd', classifyForUser)
+      }
+      // console.log('classify', classify)
+    }
+
     const item = await this.proxy.create(_.pickBy({
       ...data
     }));
