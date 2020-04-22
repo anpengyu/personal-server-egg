@@ -17,4 +17,5 @@ type Article {
   comment:[Comment!]
   label:String
   course:[String]
+  classify:Classify
 }

@@ -30,6 +30,16 @@ class ClassifyConnector {
         return classify;
     }
 
+    async loadClassifyForArticle(params) {
+        const classify = await this.proxy.find({
+            where: {
+                name: params.course,
+                userId:params.userId,
+            },
+        });
+        return classify;
+    }
+
     async loadClassifyForUser(id) {
         const classify = await this.proxy.findAll({
             where: {
