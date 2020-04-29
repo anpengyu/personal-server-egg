@@ -22,6 +22,8 @@
     "clean": "ets clean"
   },
   "dependencies": {
+    "apollo-boost": "^0.4.7",
+    "apollo-link-context": "^1.0.20",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
@@ -35,6 +37,7 @@
     "egg-scripts": "^2.13.0",
     "egg-sequelize": "^3.1.0",
     "egg-validate": "^2.0.2",
+    "graphql": "^15.0.0",
     "jsonwebtoken": "^8.5.1",
     "loadsh": "0.0.4",
     "lodash": "^4.17.15",

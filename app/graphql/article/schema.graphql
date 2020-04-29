@@ -16,6 +16,8 @@ type Article {
   articleSubTitle:String!
   comment:[Comment!]
   label:String
-  course:[String]
+  course:String
   classify:Classify
+  audit:Int
+  auditCause:String
 }
