@@ -5,9 +5,7 @@ type User {
   username: String!
   articles:[Article!]
   classify:[Classify]
-  items: [Item!]
   sex:String!
-  tags:[Tag!]
   headImg:String
   likes:String
   collects:String
@@ -15,4 +13,5 @@ type User {
   historys:String
   attention:String
   token:String
+  phone:String
 }

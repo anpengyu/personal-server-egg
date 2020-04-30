@@ -5,7 +5,7 @@ const path = require('path');
 export default function (app) {
 
   app.beforeStart(async () => {
-    await app.model.sync();
+    // await app.model.sync();
     // const mysql = {
     //   ...app.config.mysql.client,
     //   entities: [

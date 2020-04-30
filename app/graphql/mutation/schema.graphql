@@ -4,7 +4,7 @@ enum Data {
 }
 
 type response{
-  id:ID
+
   status:Int!
   data:String
 }
@@ -30,15 +30,6 @@ type Mutation {
   #User
   changeUserInfo(userId:ID!,id:ID!,type:Int!):User #添加点赞 type 1:点赞列表 2:收藏列表 3:浏览记录 4:关注的作者 5:评论列表 6:文章列表
   register(username:String!,password:String!,repassword:String!,phone:String!):User #注册
-
-  # Item
-  createItem (userID: ID!, content: String!, expire: Date,time:String!): Item
-  updateItem (id: ID!, content: String, expire: Date, done: Boolean): Item
-  deleteItem (id: ID!): Item 
-
-  # Tag
-  attachTag (itemID: ID!, tag: String!): Tag 
-  removeTag (id: ID!): Tag 
 }
 
 # {

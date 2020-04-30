@@ -4,14 +4,12 @@ module.exports = {
   Query: {
     // 获取所有文章
     allArticles(root, params, ctx) {
+      console.log('....')
       return ctx.connector.article.loadAllArticles(params);
     },
     //根据文章id获取文章详情
     article(root, { id }, ctx) {
-      return ctx.connector.article.fetchById(id);
-    },
-    tags(root, params, ctx) {
-      return ctx.connector.item.fetchRecommandation();
+      return ctx.connector.article.articleDetail(id);
     },
   },
   User: {

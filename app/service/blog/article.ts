@@ -1,5 +1,5 @@
 import BaseService from '../../core/BaseService';
-import Article from '../../entity/blog/article';
+import Article from '../../entity/blog/Article';
 // import { getRepository } from 'typeorm';
 let _ = require('lodash');
 // let moment =require( 'moment');
@@ -42,7 +42,7 @@ return '';
             article.userId = params.userId;
             article.articleTitle = params.articleTitle;
             article.articleContent = params.articleContent;
-            article.articleSubtitle = params.articleSubtitle;
+            article.articleSubTitle = params.articleSubtitle;
             // article.user = this.currentUser;
             await article.save();
             return {state:0};

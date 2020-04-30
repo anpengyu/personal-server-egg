@@ -16,8 +16,6 @@ module.exports = {
     },
     Article: {
         classify(root, params, context) {
-            console.log('root',root)
-            console.log('params',params)
             return context.connector.classify.loadClassifyForArticle(root);
         }
     },

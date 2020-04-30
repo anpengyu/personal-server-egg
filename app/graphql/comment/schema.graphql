@@ -11,7 +11,7 @@ type Comment {
   replyToCommentId:String!#回复的评论ID
   rootCommentId:String!
   liks:Int!#点赞数
-  updated_at: Date
-  created_at: Date
+  updateDate: Date
+  createDate: Date
   comment:[Comment!]
 }

@@ -6,13 +6,12 @@ type Article {
   articleTitle:String!
   articleContent:String!
   articlePraiseCount:Int!
-  articleDislikeCount:Int!
+  articleDisLikeCount:Int!
   articlePageView:Int!
   articleCommentCount:Int!
   user:User!
   updated_at: Date
-  created_at: Date
-  tags:[Tag!]
+  createDate: Date
   articleSubTitle:String!
   comment:[Comment!]
   label:String

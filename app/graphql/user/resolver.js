@@ -1,13 +1,11 @@
 'use strict';
+const _ = require('lodash');
 
 module.exports = {
   Query: {
+    //根据id获取单个用户详情
     user(root, { id }, ctx) {
-      let d = ctx.connector.user.fetchById(id);
-      return d;
-    },
-    tags(root, params, ctx) {
-      return ctx.connector.item.fetchRecommandation();
+      return ctx.connector.user.user(id);
     },
     login(root, params, ctx) {
       return ctx.connector.user.login(params);
@@ -19,27 +17,22 @@ module.exports = {
   Article: {
     //根据文章获取所属用户
     user(root, _, ctx) {
-      return ctx.connector.user.fetchById(root.userId);
+      return ctx.connector.user.user(root.userId);
     }
   },
   Comment: {
     //根据文章获取所属用户
-    creator(root, _, ctx) {
-      return ctx.connector.user.fetchById(root.userId);
+   async creator(root, _, ctx) {
+      return await ctx.connector.user.user(root.userId);
 
     },
-    replyTo(root, _, ctx) {
-      if (root.replyToCommentId === 0) {
+    replyTo(root, params, ctx) {
+      if (_.eq(root.replyToCommentId,'0')) {
         return { id: -1, username: '', sex: '', headImg: '' };
       }
-      return ctx.connector.user.fetchById(root.replyToCommentId);
+      return ctx.connector.user.user(root.replyToCommentId);
     },
   },
-  // Classify: {
-  //   loadClassifyForUser(root, id, context) {
-  //     return context.connector.classify.loadClassifyForUser(root.userId);
-  //   }
-  // },
   Mutation: {
     //点赞 1:点赞列表 2:收藏列表 3:浏览记录 4:关注的作者 5:评论列表 6:文章列表
     changeUserInfo(root, { userId, id, type }, ctx) {

@@ -2,7 +2,7 @@
 type Query {
   
   user(id: ID!): User
-  tags: [String!]
+
   article(id:ID!):Article
   # 获取所有文章，audit：0 未审核 1 已审核
   allArticles(audit:Int,articleTitle:String,username:String,updated_at:String,course:String,label:String,):[Article!]
@@ -15,8 +15,4 @@ type Query {
   #登录
   login(username:String!,password:String!):User 
   logout:User
-  
-  # 测试用例
-  hello:String
-  example_user(id:String!):Example_User
 }

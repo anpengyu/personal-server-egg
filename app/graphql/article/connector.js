@@ -2,37 +2,15 @@
 
 const DataLoader = require('dataloader');
 const _ = require('lodash');
+
+const Article = require('../../entity/blog/Article').default
+const Classify = require('../../entity/blog/Classify').default
+const User = require('../../entity/user').default
 class UserConnector {
-  constructor(ctx) {
-    this.ctx = ctx;
-    this.loader = new DataLoader(this.fetch.bind(this));
-    this.proxy = ctx.app.model.Article;
-    this.classifyProxy = ctx.app.model.Classify;
-  }
 
-  fetch(ids) {
-    const users = this.ctx.app.model.Article.findAll({
-      where: {
-        id: {
-          $in: ids,
-        },
-      },
-    }).then(us =>
-
-      us.map(u => u.toJSON())
-    );
-    return users;
-  }
-
-  fetchByIds(ids) {
-    return this.loader.loadMany(ids);
-  }
-
-  fetchById(id) {
-    let d = this.loader.load(id);
-
-
-    return d;
+  //根据userId获取所属所有文章
+  async articleDetail(id) {
+    return await Article.findOne({ id: id });
   }
 
   // 获取所有文章
@@ -41,15 +19,16 @@ class UserConnector {
     let audit = params.audit;
     let articleTitle = params.articleTitle;
     let username = params.username;
-    let updated_at = params.updated_at;
+    let createDate = params.createDate;
     let course = params.course;
     let label = params.label;
 
     let condition = {
-      // limit: 10, offset: 0,
-      order: [["created_at", "desc"]]
+      skip: 0, take: 10,
+      order: { createDate: "DESC" }
     }
-    if (!_.isEmpty(audit)&&audit != 4) {
+
+    if (_.isNumber(audit) && audit != 4) {
       console.log('audit', audit)
       condition = {
         where: { audit: audit },
@@ -65,7 +44,7 @@ class UserConnector {
     }
 
     if (!_.isEmpty(username)) {
-      const user = await this.ctx.app.model.User.findOne({
+      const user = await User.findOne({
         where: {
           username: params.username
         }
@@ -75,7 +54,7 @@ class UserConnector {
         userId: user && user.id || 0,
       }
     }
-    if (!_.isEmpty(updated_at)) {
+    if (!_.isEmpty(createDate)) {
       where = {
         ...where,
         updated_at,
@@ -93,80 +72,49 @@ class UserConnector {
         label,
       }
     }
-    var objs = Object.keys(where)
-    console.log(objs)
-
     condition = {
       ...condition,
       where,
     }
-    console.log('condition', condition)
-    // let d = await this.ctx.app.model.Article.findAndCountAll()
-
-    // d.then(res=>  console.log('count', res))
-  
-    const articles = this.ctx.app.model.Article.findAll({
-      ...condition
-    }).then(us =>
-      us.map(u => u.toJSON())
-    );
-    return articles;
+    return await Article.find({ ...condition });
   }
 
   // 文章审核
   async auditArticle(params) {
-    const article = await this.ctx.app.model.Article.findOne({
-      where: {
-        id: params.articleId
-      }
-    }).then(res => res && res.toJSON());
+    const article = await Article.findOne({ where: { id: params.articleId } })
     let response = {
       status: 0,
       data: "",
       model: {}
     }
+
     console.log('params', params)
     if (!_.isEmpty(article)) {
       article.audit = params.audit;
       article.auditCause = params.cause;
-      console.log('article', article)
-      let Updateresponse = await this.proxy.update(article, {
-        where: {
-          id: params.articleId
-        },
-      });
-      console.log('response', Updateresponse)
-      if (Updateresponse[0] == 1) {
-        response.model = article;
+      let updateResponse = await Article.save(article)
+      console.log('response', updateResponse)
+      if (!_.isEmpty(updateResponse)) {
         return response;
       } else {
         response.status = 1;
+        return response;
       }
     }
     response.status = 2;
     response.data = '文章不存在'
     return response;
-
   }
 
-  loadAllArticlesForUser(id) {
-    const articles = this.ctx.app.model.Article.findAll({
-      where: {
-        userId: id
-      },
-    }).then(us =>
-      us.map(u => u.toJSON())
-    );
-    return articles;
+  async loadAllArticlesForUser(id) {
+    return await Article.find({ userId: id })
   }
 
   async addClassify(data, id) {
     if (!_.isEmpty(data.course)) {
-      const classifyForUser = await this.classifyProxy.findAll({
+      const classifyForUser = await Classify.find({
         where: { userId: data.userId },
-      }).then(us =>
-        us.map(u => u.toJSON())
-      );
+      });
       if (classifyForUser) {
         let course = _.filter(classifyForUser, function (o) { return _.eq(o.name, data.course); });
         if (course && !_.isEmpty(course)) {
@@ -186,7 +134,7 @@ class UserConnector {
     let detail = JSON.parse(course.detail);
     detail.push(detailData)
     course.detail = JSON.stringify(detail)
-    await this.classifyProxy.update(_.pickBy({
+    await Classify.save(_.pickBy({
       ...course
     }), { where: { userId: data.userId, name: course.name } });
   }
@@ -198,7 +146,7 @@ class UserConnector {
       name: data.course,
       detail: JSON.stringify(newDetail)
     }
-    await this.classifyProxy.create(_.pickBy({
+    await Classify.save(_.pickBy({
       ...classifyData
     }));
   }
@@ -210,32 +158,26 @@ class UserConnector {
     }
     //添加分类
 
-    const item = await this.proxy.create(_.pickBy({
+    const item = await Article.save(_.pickBy({
       ...data
-    })).then(us => !_.isEmpty(us) && us.toJSON());
+    }))
     console.log('....................', item)
-
     this.addClassify(data, item.id)
-
     return item;
   }
 
   // 添加文章查看次数
   async addWatchCount(id) {
-    const article = await this.loader.load(id);
+    const article = await Article.findOne({id})
     article.articlePageView += 1
-    let data = await this.ctx.app.model.Article.update(article, {
-      where: {
-        id: id
-      },
-    })
+    let data = await Article.save(article)
     return { articlePageView: article.articlePageView };
   }
 
   // 点赞 1:点赞列表 2:收藏列表 3:浏览记录 4:关注的作者 5:评论列表 6:文章列表  type:1添加 2:减
   async addPraiseCount(id, flag, type) {
 
-    const article = await this.loader.load(id);
+    const article = await Article.findOne({id})
     if (type == 1) {//1：点赞  2：取消点赞
       switch (flag) {
         case 1: article.articlePraiseCount += 1
@@ -268,11 +210,7 @@ class UserConnector {
       }
     }
 
-    let data = await this.ctx.app.model.Article.update(article, {
-      where: {
-        id: id
-      },
-    })
+    let data = await Article.save(article)
     return { id: article.id };
   }
 

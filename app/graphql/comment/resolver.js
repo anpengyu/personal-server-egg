@@ -15,7 +15,8 @@ module.exports = {
   },
   Comment: {
     comment(root, _, ctx) {
-      return ctx.connector.comment.loadAllComment(root.articleId,root.id );
+      console.log('root.id',root.id)
+      return ctx.connector.comment.loadAllComment1(root.articleId,root.id );
     },
   },
   Mutation: {
