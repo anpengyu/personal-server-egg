@@ -5,17 +5,17 @@ const _ = require('lodash');
 
 const Article = require('../../entity/blog/Article').default
 const Classify = require('../../entity/blog/Classify').default
-const User = require('../../entity/user').default
-class UserConnector {
+const User = require('../../entity/User').default
+const BaseConnector = require('../../core/BaseConnector').default
 
-  //根据userId获取所属所有文章
-  async articleDetail(id) {
-    return await Article.findOne({ id: id });
+class UserConnector extends BaseConnector {
+
+  constructor(ctx) {
+    super(ctx)
   }
 
   // 获取所有文章
   async loadAllArticles(params) {
-    console.log('params', params)
     let audit = params.audit;
     let articleTitle = params.articleTitle;
     let username = params.username;
@@ -24,12 +24,11 @@ class UserConnector {
     let label = params.label;
 
     let condition = {
-      skip: 0, take: 10,
+      skip: this.pageNum, take: this.pageSize,
       order: { createDate: "DESC" }
     }
 
     if (_.isNumber(audit) && audit != 4) {
-      console.log('audit', audit)
       condition = {
         where: { audit: audit },
         ...condition
@@ -76,7 +75,16 @@ class UserConnector {
       ...condition,
       where,
     }
+
+    this.loadPagination<Article>(Article);
+    let articleCount = await Article.count()
+    console.log('count', articleCount)
     return await Article.find({ ...condition });
+  }
+
+  //根据userId获取所属所有文章
+  async articleDetail(id) {
+    return await Article.findOne({ id: id });
   }
 
   // 文章审核
@@ -88,12 +96,10 @@ class UserConnector {
       model: {}
     }
 
-    console.log('params', params)
     if (!_.isEmpty(article)) {
       article.audit = params.audit;
       article.auditCause = params.cause;
       let updateResponse = await Article.save(article)
-      console.log('response', updateResponse)
       if (!_.isEmpty(updateResponse)) {
         return response;
       } else {
@@ -107,6 +113,7 @@ class UserConnector {
   }
 
   async loadAllArticlesForUser(id) {
+    console.log(',,,,,,,,,,,,,,')
     return await Article.find({ userId: id })
   }
 
@@ -123,7 +130,6 @@ class UserConnector {
           this.addNewClassify(data, id)
         }
       }
-      // console.log('classify', classify)
     }
 
   }
@@ -161,14 +167,13 @@ class UserConnector {
     const item = await Article.save(_.pickBy({
       ...data
     }))
-    console.log('....................', item)
     this.addClassify(data, item.id)
     return item;
   }
 
   // 添加文章查看次数
   async addWatchCount(id) {
-    const article = await Article.findOne({id})
+    const article = await Article.findOne({ id })
     article.articlePageView += 1
     let data = await Article.save(article)
     return { articlePageView: article.articlePageView };
@@ -177,7 +182,7 @@ class UserConnector {
   // 点赞 1:点赞列表 2:收藏列表 3:浏览记录 4:关注的作者 5:评论列表 6:文章列表  type:1添加 2:减
   async addPraiseCount(id, flag, type) {
 
-    const article = await Article.findOne({id})
+    const article = await Article.findOne({ id })
     if (type == 1) {//1：点赞  2：取消点赞
       switch (flag) {
         case 1: article.articlePraiseCount += 1

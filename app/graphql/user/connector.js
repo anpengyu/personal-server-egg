@@ -10,18 +10,7 @@ const User = require('../../entity/User').default
 class UserConnector {
   constructor(ctx) {
     this.ctx = ctx;
-    // this.loader = new DataLoader(this.fetch.bind(this));
-    // this.proxy = User;
     this.token = ctx.request.header.authorization;
-  }
-
-  async fetch(ids) {
-    const users = await this.proxy.find({ where: { id: { $in: ids } } })
-    return users;
-  }
-
-  fetchByIds(ids) {
-    return this.loader.loadMany(ids);
   }
 
   async user(id) {

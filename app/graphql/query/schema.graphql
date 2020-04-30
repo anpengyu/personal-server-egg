@@ -1,11 +1,15 @@
 
+
+
 type Query {
   
   user(id: ID!): User
 
   article(id:ID!):Article
   # 获取所有文章，audit：0 未审核 1 已审核
-  allArticles(audit:Int,articleTitle:String,username:String,updated_at:String,course:String,label:String,):[Article!]
+  allArticles(audit:Int,articleTitle:String,username:String,updated_at:String,
+  course:String,label:String,pageNum:Int!,pageSize:Int!):[Article!]
+
   comment(articleId:ID!):[Comment!]
 
   # 获取文章分类

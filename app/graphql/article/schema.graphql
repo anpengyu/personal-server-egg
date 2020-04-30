@@ -1,4 +1,10 @@
 # 架构，定义GraphQL API的轮廓和规范
+type pagination{
+  pageNum:Int
+  pageSize:Int
+  totalCount:Int
+  totalPage:Int
+}
 
 type Article {
   id: ID!
@@ -19,4 +25,5 @@ type Article {
   classify:Classify
   audit:Int
   auditCause:String
+  pagination:pagination
 }

@@ -1,6 +1,7 @@
 import { Service } from 'egg';
-import { getConnection, getRepository } from 'typeorm';
+import {  getRepository } from 'typeorm';
 import User from '../entity/User';
+import BaseModel from './BaseModel';
 let _ = require('lodash');
 
 /**
@@ -8,55 +9,43 @@ let _ = require('lodash');
  */
 export default class BaseService extends Service {
     paramsData: any = {};
-    params: any = '';
-    offset: number = 0;
-    limit: number = 10;
+    pageNum: number = 0;
+    pageSize: number = 10;
     currentUser: User;
+
+
+
     constructor(request: any) {
         super(request);
         const { ctx } = this;
+        let params: { variables: { pageNum: number, pageSize: number } } = { variables: { pageNum: 0, pageSize: 10 } }
         if (ctx.request.method == 'GET') {
-            this.params = ctx.query;
+            params = ctx.query;
         } else {
-            this.params = ctx.request.body
+            params = ctx.request.body
         }
-        console.log('this.params',this.params)
-        
+        this.pageNum =params.variables&& params.variables.pageNum || 0;
+        this.pageSize = params.variables&&params.variables.pageSize || 10;
+        console.log('this.params', this.pageNum, this.pageSize)
+        // this.pageNum = this.params.
         // this.offset = _.isEmpty(this.params.pageNum) ? 0 : ((Number(this.params.pageNum) - 1) * (Number(this.params.pageSize) || 10))
         // this.limit = Number(this.params.pageSize) || 10;
         // this.currentUser = ctx.req['currentUser']
     }
 
     //获取分页每页条数、页数、总条数
-    public async loadPagination(params: any) {
-        let sql = '';
-        if (_.isEmpty(params)) {
-            sql = `select count(1) as count from work`;
-        } else {
-            sql = `select count(1) as count from work where`;
-            params.map((item: any) => {
-                let key = Object.keys(item)[0];
-                if (!_.isEmpty(item[key])) {
-                    sql += ` ${key} = '${item[key]}' and`;
-                }
-            })
-            if (sql.slice(sql.length - 3, sql.length) == 'and') {
-                sql = sql.slice(0, sql.length - 3);
-            }
-            if (sql.slice(sql.length - 5, sql.length) == 'where') {
-                sql = sql.slice(0, sql.length - 5);
-            }
-        }
-        const totalCountSql = await getConnection().query(sql);
-        const pageSize = this.params.pageSize || 10;
-        const totalCount = totalCountSql[0].count;
-        const pagination = {
-            page: this.params.pageNum || 1,
-            perPage: pageSize,
-            totalCount,
-            totalPage: Math.floor((totalCount - 1) / pageSize) + 1,
-        };
-        return pagination;
+    public async loadPagination<T>(T t) {
+        console.log('params', t.find())
+        // const totalCountSql = await getConnection().query(sql);
+        // const pageSize = this.pageSize || 10;
+        // const totalCount = totalCountSql[0].count;
+        // const pagination = {
+        //     page: this.pageNum || 1,
+        //     perPage: pageSize,
+        //     totalCount,
+        //     totalPage: Math.floor((totalCount - 1) / pageSize) + 1,
+        // };
+        // return pagination;
     }
 
     /**
