@@ -2,20 +2,38 @@
 
 const DataLoader = require('dataloader');
 const _ = require('lodash');
+// import { getConnection } from "typeorm";
+// import { buildPaginator } from 'typeorm-cursor-pagination';
 
+const {getConnection} = require('typeorm')
+const {buildPaginator} = require('typeorm-cursor-pagination')
 const Article = require('../../entity/blog/Article').default
 const Classify = require('../../entity/blog/Classify').default
 const User = require('../../entity/User').default
 const BaseConnector = require('../../core/BaseConnector').default
 
-class UserConnector extends BaseConnector {
-
-  constructor(ctx) {
-    super(ctx)
-  }
+class UserConnector extends BaseConnector{
 
   // 获取所有文章
   async loadAllArticles(params) {
+    const queryBuilder = getConnection()
+    .getRepository(Article)
+    .createQueryBuilder('article')
+    .where("article.id >= :id", { id: params.pageNum });
+   
+  const paginator = buildPaginator({
+    entity: Article,
+    query: {
+      limit: 2,
+      order: 'ASC',
+      afterCursor: 'aWQ6MjI4',
+    },
+  });
+  const { data, cursor } = await paginator.paginate(queryBuilder);
+  console.log('data',data,cursor)
+
+
+
     let audit = params.audit;
     let articleTitle = params.articleTitle;
     let username = params.username;
@@ -76,10 +94,23 @@ class UserConnector extends BaseConnector {
       where,
     }
 
-    this.loadPagination<Article>(Article);
-    let articleCount = await Article.count()
-    console.log('count', articleCount)
-    return await Article.find({ ...condition });
+    // this.loadPagination<Article>(Article);
+    let totalCount = await Article.count()
+    let data1 = await Article.find({ ...condition })
+    const index = _.findIndex(data1, one => one.id === 223)
+    let data2 = data1.slice(index + 1, index + 1 + 5)
+    let hasNextPage = index + 1 + 5 < totalCount
+    let hasPreviousPage = index > 0
+    console.log('index',index,hasNextPage,hasPreviousPage)
+    let pagination = {
+      totalCount
+    }
+    let response = {
+      code: 0,
+      data:data1,
+      pagination
+    }
+    return response;
   }
 
   //根据userId获取所属所有文章

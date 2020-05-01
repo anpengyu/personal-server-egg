@@ -50,6 +50,7 @@
     "react-helmet": "^5.2.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.24",
+    "typeorm-cursor-pagination": "^0.2.2",
     "umi-server": "^1.2.2"
   },
   "devDependencies": {

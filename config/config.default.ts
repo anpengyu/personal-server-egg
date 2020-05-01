@@ -19,7 +19,7 @@ export default (appInfo: EggAppInfo) => {
   config.middleware = ['auth', 'graphql'];
 
   config.graphql = {
-    router: '/graphql',
+    router: '/graphiql',
     // 是否加载到 app 上，默认开启
     app: true,
     // 是否加载到 agent 上，默认关闭

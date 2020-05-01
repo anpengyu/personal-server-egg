@@ -1,7 +1,7 @@
 import { Service } from 'egg';
 import {  getRepository } from 'typeorm';
 import User from '../entity/User';
-import BaseModel from './BaseModel';
+// import BaseModel from './BaseModel';
 let _ = require('lodash');
 
 /**
@@ -34,8 +34,8 @@ export default class BaseService extends Service {
     }
 
     //获取分页每页条数、页数、总条数
-    public async loadPagination<T>(T t) {
-        console.log('params', t.find())
+    // public async loadPagination<T>(T t) {
+    //     console.log('params', t.find())
         // const totalCountSql = await getConnection().query(sql);
         // const pageSize = this.pageSize || 10;
         // const totalCount = totalCountSql[0].count;
@@ -46,7 +46,7 @@ export default class BaseService extends Service {
         //     totalPage: Math.floor((totalCount - 1) / pageSize) + 1,
         // };
         // return pagination;
-    }
+    // }
 
     /**
      * 拼接查询参数
