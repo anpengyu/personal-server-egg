@@ -5,35 +5,84 @@ const _ = require('lodash');
 // import { getConnection } from "typeorm";
 // import { buildPaginator } from 'typeorm-cursor-pagination';
 
-const {getConnection} = require('typeorm')
-const {buildPaginator} = require('typeorm-cursor-pagination')
+const { getConnection } = require('typeorm')
+const { buildPaginator } = require('typeorm-cursor-pagination')
 const Article = require('../../entity/blog/Article').default
 const Classify = require('../../entity/blog/Classify').default
 const User = require('../../entity/User').default
 const BaseConnector = require('../../core/BaseConnector').default
 
-class UserConnector extends BaseConnector{
+class UserConnector extends BaseConnector {
+
+  createPageInfo(noteEdges, totalCount, findOptions) {
+    let hasNextPage;
+    let hasPreviousPage;
+    console.log('noteEdges.length', noteEdges.length)
+
+    hasNextPage = !_.isEmpty(findOptions.afterCursor) ? true : false
+    hasPreviousPage = !_.isEmpty(findOptions.beforeCursor) ? true : false
+
+    // if (_.isEmpty(findOptions.afterCursor) && _.isEmpty(findOptions.beforeCursor)) {
+    //   hasPreviousPage = false;
+    //   hasNextPage = false
+    // }
+    return {
+      startCursor: noteEdges[0].cursor,
+      endCursor: noteEdges[noteEdges.length - 1].cursor,
+      hasNextPage,
+      hasPreviousPage
+    };
+  }
+
 
   // 获取所有文章
   async loadAllArticles(params) {
-    const queryBuilder = getConnection()
-    .getRepository(Article)
-    .createQueryBuilder('article')
-    .where("article.id >= :id", { id: params.pageNum });
-   
-  const paginator = buildPaginator({
-    entity: Article,
-    query: {
-      limit: 2,
-      order: 'ASC',
-      afterCursor: 'aWQ6MjI4',
-    },
-  });
-  const { data, cursor } = await paginator.paginate(queryBuilder);
-  console.log('data',data,cursor)
+    let queryBuilder = getConnection()
+      .getRepository(Article)
+      .createQueryBuilder('article').orderBy('id',"DESC")
+      .where("article.user_id = :id", { id: 1 })
 
+    // if (!_.isEmpty(params.before)) {
+    //   queryBuilder = queryBuilder.where("article.id <= :id", { id: params.pageNum });
+    // }else{
+    //   queryBuilder = queryBuilder.where("article.id >= :id", { id: params.pageNum });
+    // }
 
+    console.log(' params.before', params.before)
+    let paginator = buildPaginator({
+      entity: Article,
+      query: {
+        limit: 2,
+        // order: 'ASC'
+      },
+    });
+    if (!_.isEmpty(params.after)) {
+      paginator = buildPaginator({
+        entity: Article,
+        query: {
+          limit: 2,
+          // order: 'ASC',
+          afterCursor: params.after,
 
+        },
+      });
+    }
+    if (!_.isEmpty(params.before)) {
+      paginator = buildPaginator({
+        entity: Article,
+        query: {
+          limit: 2,
+          // order: 'ASC',
+          beforeCursor: params.before,
+        },
+      });
+    }
+    console.log('paginator', paginator)
+    const { data, cursor } = await paginator.paginate(queryBuilder);
+    console.log('data', data, cursor)
+    let totalCount1 = await Article.count()
+    const ss = this.createPageInfo(data, totalCount1, cursor)
+    // console.log('ssssss', ss)
     let audit = params.audit;
     let articleTitle = params.articleTitle;
     let username = params.username;
@@ -101,13 +150,13 @@ class UserConnector extends BaseConnector{
     let data2 = data1.slice(index + 1, index + 1 + 5)
     let hasNextPage = index + 1 + 5 < totalCount
     let hasPreviousPage = index > 0
-    console.log('index',index,hasNextPage,hasPreviousPage)
+    console.log('index', index, hasNextPage, hasPreviousPage)
     let pagination = {
       totalCount
     }
     let response = {
       code: 0,
-      data:data1,
+      data: data1,
       pagination
     }
     return response;

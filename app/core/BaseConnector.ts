@@ -10,7 +10,7 @@ let _ = require('lodash');
 export default class BaseService extends Service {
     paramsData: any = {};
     pageNum: number = 0;
-    pageSize: number = 10;
+    pageSize: number = 20;
     currentUser: User;
 
 
@@ -25,7 +25,7 @@ export default class BaseService extends Service {
             params = ctx.request.body
         }
         this.pageNum =params.variables&& params.variables.pageNum || 0;
-        this.pageSize = params.variables&&params.variables.pageSize || 10;
+        this.pageSize = params.variables&&params.variables.pageSize || 20;
         console.log('this.params', this.pageNum, this.pageSize)
         // this.pageNum = this.params.
         // this.offset = _.isEmpty(this.params.pageNum) ? 0 : ((Number(this.params.pageNum) - 1) * (Number(this.params.pageSize) || 10))

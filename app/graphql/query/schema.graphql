@@ -20,7 +20,7 @@ type Query {
   article(id:ID!):Article
   # 获取所有文章，audit：0 未审核 1 已审核
   allArticles(audit:Int,articleTitle:String,username:String,updated_at:String,
-  course:String,label:String,pageNum:Int!,pageSize:Int!):ResponseArticle
+  course:String,label:String,pageNum:Int!,pageSize:Int!,after:String,before:String):ResponseArticle
 
   comment(articleId:ID!):[Comment!]
 
