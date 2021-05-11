@@ -34,7 +34,7 @@
     "egg-validate": "^2.0.2",
     "jsonwebtoken": "^8.5.1",
     "loadsh": "0.0.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "mysql": "^2.18.1",
     "passport": "^0.4.1",
